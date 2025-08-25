@@ -1326,38 +1326,6 @@ setTimeout(() => {
             io.observe(footer);
         })();
 
-        // HubSpot prefill: 店舗名／URL with shop_id_url (editable, prefilled)
-        function prefillHS() {
-            var root = document.querySelector('.hs-form-frame');
-            if (!root) return;
-            var shopId = (window.shop_id_url || (window.SETTINGS && SETTINGS.shopIdUrl) || '');
-            if (!shopId) return;
-            var inputs = root.querySelectorAll('input');
-            inputs.forEach(function(inp) {
-                var meta = (inp.getAttribute('name') || '') + (inp.getAttribute('aria-label') || '') + (inp.getAttribute('placeholder') || '');
-                if (/店舗名|URL|shop_id|shop|ショップ/i.test(meta)) {
-                    if (!inp.value) {
-                        inp.value = shopId;
-                        inp.dispatchEvent(new Event('input', { bubbles: true }));
-                    }
-                }
-            });
-        }
-        
-        window.addEventListener('message', function(ev) {
-            try {
-                if (ev && ev.data && ev.data.type === 'hsFormCallback' && ev.data.eventName === 'onFormReady') {
-                    setTimeout(prefillHS, 150);
-                }
-            } catch (e) { }
-        });
-        
-        // Retry loop in case the form mounts late
-        var tries = 0, t = setInterval(function() {
-            tries++;
-            prefillHS();
-            if (tries > 80) clearInterval(t);
-        }, 100);
     } catch (e) { }
 })();
 
