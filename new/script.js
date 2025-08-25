@@ -187,19 +187,14 @@ function applyI18n(lang) {
 
 // Default application settings - using zhong sample data.  
 
-// Get shop_hash directly from URL query string
-const queryString = window.location.search.replace('?', '');
-let hash, shop_id_url;
+// Default fallback values
+let shop_id_url = 'kakiemon';
+let hash = '11fd69c-147r6ap-1337mx7';
 
-if (queryString) {
-    const parts = queryString.split('_');
-    shop_id_url = parts[0];
-    hash = parts.slice(1).join('_');
-} else {
-    // Fallback defaults
-    shop_id_url = 'solairo';
-    hash = '11fd69c-147r6ap-1479772';
-}
+// Parse URL query string for shop and hash parameters
+const urlParams = new URLSearchParams(window.location.search);
+shop_id_url = urlParams.get('shop_id_url') || shop_id_url;
+hash = urlParams.get('hash') || hash;
 
 const SETTINGS = {
     dataUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.json`,
@@ -641,6 +636,11 @@ function renderKeywords(list) {
     const ln = document.getElementById('lockNote');
     if (ln) {
         ln.style.display = 'block';
+    }
+    
+    // Create keyword cloud when keywords are rendered (only once, faster)
+    if (!document.querySelector('.keyword-cloud')) {
+        setTimeout(createKeywordCloud, 200);
     }
 }
 
@@ -1545,3 +1545,132 @@ function startCategoryAutoAdvance(categories) {
 document.addEventListener('DOMContentLoaded', () => {
     initializeShopCategories();
 });
+
+// Auto-fill HubSpot form using URL parameters (the working method!)
+setTimeout(() => {
+    if (shop_id_url && hash) {
+        const currentUrl = new URL(window.location.href);
+        
+        // Add the parameters that work
+        if (!currentUrl.searchParams.has('shop_id_url')) {
+            currentUrl.searchParams.set('shop_id_url', shop_id_url);
+            // Reload with new URL to trigger HubSpot auto-fill
+            window.location.href = currentUrl.toString();
+        }
+    }
+}, 1000);
+
+/* =============================================================================
+   3D KEYWORD CLOUD BACKGROUND (TagCloud.js)
+   ============================================================================= */
+
+let tagCloudInstance = null;
+
+// Initialize TagCloud container
+function initTagCloudContainer() {
+    // Remove existing cloud if any
+    const existingCloud = document.querySelector('.keyword-cloud');
+    if (existingCloud) existingCloud.remove();
+    
+    // Create new cloud container
+    const cloud = document.createElement('div');
+    cloud.className = 'keyword-cloud';
+    cloud.id = 'keywordCloud';
+    document.body.appendChild(cloud);
+    
+    return cloud;
+}
+
+// Main function to create the 3D keyword cloud
+function createKeywordCloud() {
+    // Check if TagCloud library is loaded
+    if (typeof TagCloud === 'undefined') {
+        setTimeout(createKeywordCloud, 500);
+        return;
+    }
+    
+    // Get all keywords from all items (same logic as before)
+    const items = SETTINGS.items || [];
+    if (!items.length) return;
+    
+    // Extract all keywords from all items
+    const allKeywords = [];
+    items.forEach(item => {
+        if (Array.isArray(item.keywords)) {
+            item.keywords.forEach(kw => {
+                if (kw && kw.keyword && kw.keyword.length > 1) {
+                    allKeywords.push(kw.keyword);
+                }
+            });
+        }
+    });
+    
+    // Remove duplicates and limit count
+    const uniqueKeywords = [...new Set(allKeywords)];
+    if (!uniqueKeywords.length) return;
+    
+    // Select keywords for the cloud (20-40 keywords work best for TagCloud)
+    const targetCount = Math.max(20, Math.min(40, uniqueKeywords.length));
+    const keywordsToShow = [];
+    
+    // Duplicate keywords if needed to reach target count
+    while (keywordsToShow.length < targetCount) {
+        keywordsToShow.push(...uniqueKeywords);
+    }
+    
+    // Shuffle and trim to target count
+    keywordsToShow.sort(() => Math.random() - 0.5);
+    keywordsToShow.splice(targetCount);
+    
+    // Create cloud container
+    const container = initTagCloudContainer();
+    
+    // Destroy existing TagCloud instance if it exists
+    if (tagCloudInstance && tagCloudInstance.destroy) {
+        tagCloudInstance.destroy();
+    }
+    
+    // Initialize TagCloud with very large radius to fill screen
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const sphereRadius = isMobile ? 600 : 1400;
+    
+    tagCloudInstance = TagCloud(container, keywordsToShow, {
+        // Very large radius to spread across entire screen
+        radius: sphereRadius,
+        
+        // Animation speed - faster to start automatically
+        maxSpeed: 'normal',
+        initSpeed: 'fast',
+        
+        // Direction and interaction
+        direction: 135,
+        keep: true, // Enable mouse interaction
+        
+        // Don't use HTML for now - just plain text
+        useHTML: false,
+    });
+    
+    // Start automatic rotation by simulating mouse movement
+    setTimeout(() => {
+        if (tagCloudInstance) {
+            // Trigger initial movement to start the animation
+            const event = new MouseEvent('mousemove', {
+                clientX: window.innerWidth / 2,
+                clientY: window.innerHeight / 2
+            });
+            container.dispatchEvent(event);
+        }
+    }, 500);
+}
+
+// Clear existing TagCloud
+function clearKeywordCloud() {
+    if (tagCloudInstance && tagCloudInstance.destroy) {
+        tagCloudInstance.destroy();
+        tagCloudInstance = null;
+    }
+    const cloud = document.querySelector('.keyword-cloud');
+    if (cloud) cloud.remove();
+}
+
+
