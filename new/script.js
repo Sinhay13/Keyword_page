@@ -812,41 +812,6 @@ function updateActiveSelection() {
    STATISTICS DISPLAY
    ============================================================================= */
 
-/**
- * Render statistics summary
- */
-function renderStats() {
-    const slides = Number(SETTINGS.slides != null ? SETTINGS.slides : 0);
-    const kwc = Number(SETTINGS.kwCount != null ? SETTINGS.kwCount : 0);
-    const rppc = Number(SETTINGS.rppCount != null ? SETTINGS.rppCount : 0);
-    const pct = (kwc > 0) ? Math.round(100 * rppc / kwc) : null;
-    renderStatsSentence();
-}
-
-/**
- * Render the statistics sentence in the stats card
- */
-function renderStatsSentence() {
-    const hostCard = document.getElementById('statsSentence');
-    const txt = document.getElementById('statsSentenceText');
-    if (!hostCard || !txt) return;
-    
-    const slides = Number(SETTINGS.slides || 0);
-    const kw = Number(SETTINGS.kwCount || 0);
-    const rpp = Number(SETTINGS.rppCount || 0);
-    const pct = (kw > 0) ? Math.round(100 * rpp / kw) : 0;
-    let date = fmtJST(SETTINGS.updatedAt || '');
-    const fmt = n => new Intl.NumberFormat((typeof langState !== 'undefined' && langState === 'en') ? 'en-US' : 'ja-JP').format(n);
-    
-    const jp = `全 <span class="num">${fmt(slides)}</span> 商品で <span class="num">${fmt(kw)}</span> 件のキーワードを分析。RPP順位あり <span class="num">${fmt(rpp)}</span> 件（RPP率 <span class="num">${fmt(pct)}</span>%）。<span class="muted">最終更新 ${date} JST</span>`;
-    const en = `Analyzed <span class="num">${fmt(kw)}</span> keywords across <span class="num">${fmt(slides)}</span> items. <span class="num">${fmt(rpp)}</span> with RPP ranks (RPP rate <span class="num">${fmt(pct)}</span>%). <span class="muted">Updated ${date} JST</span>`;
-    
-    txt.innerHTML = (typeof langState !== 'undefined' && langState === 'en') ? en : jp;
-    try {
-        document.documentElement.setAttribute('lang', (typeof langState !== 'undefined' && langState === 'en') ? 'en' : 'ja');
-    } catch (_) { }
-    hostCard.style.display = 'block';
-}
 
 /* =============================================================================
    CSV DATA LOADING AND PROCESSING
@@ -947,7 +912,6 @@ async function buildFromCsv() {
         renderItemsList();
         CURRENT_IDX = 0;
         applySelection();
-        renderStats();
         return items.length > 0 || kwRows.length > 0;
     } catch (e) {
         return false;
@@ -967,7 +931,6 @@ try {
 document.getElementById('year').textContent = new Date().getFullYear();
 
 applyI18n(typeof langState !== 'undefined' ? langState : 'ja');
-renderStats();
 buildItemsFromSettings();
 renderItemsList();
 applySelection();
@@ -1056,13 +1019,10 @@ if (!window.USER_CLICKED && window.startAutoSelect) window.startAutoSelect();
                 if (nm && !SETTINGS.shopName) nm.textContent = shop;
             }
 
-            renderStats();
             if (data.aiActions) renderAiActions(data.aiActions);
         } catch (e) {
-            renderStats();
+            // Error handling - data loading failed
         }
-    } else {
-        renderStats();
     }
 })();
 
@@ -1075,7 +1035,6 @@ document.getElementById('footLangSwitch')?.addEventListener('click', () => {
     langState = (langState === 'en' ? 'ja' : 'en');
     localStorage.setItem('lang', langState);
     applyI18n(langState);
-    renderStats();
     const it = (SETTINGS.items || [])[CURRENT_IDX] || {};
     const kw = Array.isArray(it.keywords) ? it.keywords : SETTINGS.topKeywords;
     renderKeywords(kw || []);
@@ -1671,6 +1630,234 @@ function clearKeywordCloud() {
     }
     const cloud = document.querySelector('.keyword-cloud');
     if (cloud) cloud.remove();
+}
+
+/* =============================================================================
+   TYPEWRITER RECOMMENDATION SYSTEM
+   ============================================================================= */
+
+let typewriterConfig = null;
+let typewriterRunning = false;
+let currentProductIndex = 0;
+let currentTemplateIndex = 0;
+
+/**
+ * Load typewriter configuration from JSON file
+ */
+async function loadTypewriterConfig() {
+    try {
+        const response = await fetch('typewriter-rules.json');
+        if (!response.ok) throw new Error('Failed to load typewriter config');
+        typewriterConfig = await response.json();
+        return typewriterConfig;
+    } catch (error) {
+        // Fallback configuration if JSON fails to load
+        typewriterConfig = {
+            templates: [
+                { pattern: "{title}｜{total}件のキーワード（RPP {rpp}件）" },
+                { pattern: "{title}｜注目RPP: {rppTop3}" },
+                { pattern: "{title}｜RPPで強化: {rppTop2} など" },
+                { pattern: "{title}｜掲載拡大中（RPP {rpp}件）" }
+            ],
+            animation: { typeSpeed: 22, eraseSpeed: 14, holdDuration: 1600, gapDuration: 400 },
+            fallbacks: { noData: "—", noKeywords: "キーワードなし" }
+        };
+        return typewriterConfig;
+    }
+}
+
+/**
+ * Crop title to specified length with proper handling of Japanese characters
+ */
+function cropTitle(title, maxLength = 70) {
+    if (!title) return '';
+    const cleanTitle = String(title).trim();
+    
+    if (cleanTitle.length <= maxLength) return cleanTitle;
+    return cleanTitle.substring(0, maxLength) + '...';
+}
+
+/**
+ * Transform SETTINGS.items to typewriter format with title cropping
+ */
+function buildTypewriterItems() {
+    const items = SETTINGS.items || [];
+    if (!items.length) return [];
+    
+    return items.map(item => {
+        const keywords = Array.isArray(item.keywords) ? item.keywords : [];
+        const rppKeywords = keywords
+            .filter(kw => kw && kw.rppRank && Number(kw.rppRank) > 0)
+            .map(kw => kw.keyword)
+            .filter(Boolean);
+            
+        const total = keywords.length;
+        const rpp = rppKeywords.length;
+        
+        return {
+            title: cropTitle(item.title),
+            fullTitle: item.title || '',
+            itemIdUrl: item.itemIdUrl || item.title, // Don't crop itemIdUrl - use full length in recommendations
+            image: item.image || '',
+            total: total,
+            rpp: rpp,
+            rppKeywords: rppKeywords
+        };
+    });
+}
+
+/**
+ * Generate recommendation text from template
+ */
+function generateRecommendationText(item, template) {
+    if (!item || !template) return '';
+    
+    const fallback = typewriterConfig?.fallbacks?.noData || '—';
+    const top2 = (item.rppKeywords || []).slice(0, 2).join('・') || fallback;
+    const top3 = (item.rppKeywords || []).slice(0, 3).join('・') || fallback;
+    
+    return template.pattern
+        .replace('{itemIdUrl}', item.itemIdUrl || fallback)
+        .replace('{total}', item.total ?? fallback)
+        .replace('{rpp}', item.rpp ?? fallback)
+        .replace('{rppTop2}', top2)
+        .replace('{rppTop3}', top3);
+}
+
+/**
+ * Update product display chip
+ */
+function setProductChip(item) {
+    const elImg = document.getElementById('heroTickImg');
+    const elTitle = document.getElementById('heroTickTitle');
+    const elCounts = document.getElementById('heroTickCounts');
+    
+    if (elImg) {
+        if (item.image) {
+            elImg.src = item.image;
+            elImg.style.display = 'block';
+        } else {
+            elImg.style.display = 'none';
+        }
+        elImg.alt = item.fullTitle || 'item';
+    }
+    
+    if (elTitle) {
+        elTitle.textContent = item.title || '';
+        elTitle.title = item.fullTitle || ''; // Tooltip for full title
+    }
+    
+    if (elCounts) {
+        elCounts.textContent = `KW ${item.total ?? '—'}｜RPP ${item.rpp ?? '—'}`;
+    }
+}
+
+/**
+ * Wait utility function
+ */
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Typewriter effect - types text character by character
+ */
+async function typewrite(element, text) {
+    if (!element || !typewriterConfig) return;
+    
+    element.classList.remove('done');
+    element.textContent = '';
+    
+    for (const char of text) {
+        element.textContent += char;
+        await wait(typewriterConfig.animation.typeSpeed);
+    }
+    
+    element.classList.add('done');
+}
+
+/**
+ * Erase text character by character
+ */
+async function erase(element) {
+    if (!element || !typewriterConfig) return;
+    
+    element.classList.remove('done');
+    const text = element.textContent;
+    
+    for (let i = text.length; i >= 0; i--) {
+        element.textContent = text.slice(0, i);
+        await wait(typewriterConfig.animation.eraseSpeed);
+    }
+}
+
+/**
+ * Main typewriter animation loop
+ */
+async function startTypewriterLoop() {
+    if (typewriterRunning) return;
+    typewriterRunning = true;
+    
+    const elTypeLine = document.getElementById('typeLine');
+    if (!elTypeLine) return;
+    
+    // Load config if not already loaded
+    if (!typewriterConfig) {
+        await loadTypewriterConfig();
+    }
+    
+    const items = buildTypewriterItems();
+    const templates = typewriterConfig.templates || [];
+    
+    if (!items.length || !templates.length) {
+        typewriterRunning = false;
+        return;
+    }
+    
+    while (typewriterRunning) {
+        const item = items[currentProductIndex % items.length];
+        const template = templates[currentTemplateIndex % templates.length];
+        
+        // Update product chip
+        setProductChip(item);
+        
+        // Generate and type recommendation text
+        const recommendationText = generateRecommendationText(item, template);
+        await typewrite(elTypeLine, recommendationText);
+        await wait(typewriterConfig.animation.holdDuration);
+        
+        // Erase and move to next
+        await erase(elTypeLine);
+        await wait(typewriterConfig.animation.gapDuration);
+        
+        currentProductIndex++;
+        currentTemplateIndex++;
+    }
+}
+
+/**
+ * Stop typewriter animation
+ */
+function stopTypewriter() {
+    typewriterRunning = false;
+}
+
+/**
+ * Initialize typewriter system
+ */
+async function initTypewriter() {
+    // Wait a moment for page to be ready
+    setTimeout(async () => {
+        await loadTypewriterConfig();
+        startTypewriterLoop();
+    }, 1000);
+}
+
+// Start typewriter when page is ready
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initTypewriter();
+} else {
+    document.addEventListener('DOMContentLoaded', initTypewriter);
 }
 
 

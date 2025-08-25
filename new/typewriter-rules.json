@@ -1,0 +1,41 @@
+{
+  "templates": [
+    {
+      "id": "keyword_summary",
+      "pattern": "{itemIdUrl}｜{total}件のキーワード（RPP {rpp}件）",
+      "description": "Shows total keyword count and RPP count"
+    },
+    {
+      "id": "priority_rpp", 
+      "pattern": "{itemIdUrl}｜注目RPP: {rppTop3}",
+      "description": "Top 3 priority RPP keywords to focus on"
+    },
+    {
+      "id": "strengthening",
+      "pattern": "{itemIdUrl}｜RPPで強化: {rppTop2} など",
+      "description": "Top 2 keywords for RPP strengthening"
+    },
+    {
+      "id": "expansion_status",
+      "pattern": "{itemIdUrl}｜掲載拡大中（RPP {rpp}件）",
+      "description": "Shows expansion status with current RPP count"
+    }
+  ],
+  "animation": {
+    "typeSpeed": 22,
+    "eraseSpeed": 14,
+    "holdDuration": 1600,
+    "gapDuration": 400
+  },
+  "placeholders": {
+    "total": "Total keyword count - number of all keywords for this product",
+    "rpp": "RPP keyword count - number of keywords that have RPP rankings > 0",
+    "rppTop2": "Top 2 RPP keywords - first 2 keywords with RPP ranks > 0, joined with ・ (e.g. 'キーワード1・キーワード2')",
+    "rppTop3": "Top 3 RPP keywords - first 3 keywords with RPP ranks > 0, joined with ・ (e.g. 'キーワード1・キーワード2・キーワード3')"
+  },
+  "fallbacks": {
+    "noData": "—",
+    "noKeywords": "キーワードなし",
+    "loading": "データ読み込み中..."
+  }
+}

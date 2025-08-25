@@ -44,10 +44,20 @@
                     <div class="promo" id="promoText">NEW｜期間限定：無料AI分析付き</div>
                     <h1 id="heroTitle">楽天キーワード最適化レポート</h1>
                     <p class="muted" id="heroSubtitle" style="margin:6px 0 0">RPPと自然検索の掲載状況・順位を可視化。次にやるべき施策を簡潔にまとめたPDFをお届けします。</p>
-                    <div class="statsCard" id="statsSentence" style="display:none">
-                        <div class="statsSentence" id="statsSentenceText"></div>
+                    
+                    <!-- Typewriter recommendation system -->
+                    <div class="heroTicker" id="heroTicker">
+                        <img class="heroTickImg" id="heroTickImg" alt="item" style="display: none;"/>
+                        <div class="heroTickMeta">
+                            <div class="heroTickTitle" id="heroTickTitle"></div>
+                            <div class="heroTickCounts" id="heroTickCounts"></div>
+                        </div>
                     </div>
-                    <div style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap">
+                    <div class="statsCard">
+                        <div class="typeLine" id="typeLine"></div>
+                    </div>
+                    
+                    <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
                         <a class="btn primary" href="#request" id="ctaPrimary">無料サンプルを申し込む</a>
                         <a class="btn" id="samplePdfBtn" rel="noopener" target="_blank">サンプルPDFを見る</a>
                     </div>

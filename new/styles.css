@@ -151,7 +151,7 @@ header {
 .ratio {
     position: relative;
     width: 100%;
-    padding-top: 56.25%; /* 16:9 aspect ratio */
+    padding-top: 75%; /* Increased from 56.25% to 75% for more height (4:3 aspect ratio) */
     overflow: hidden;
     border-radius: 12px;
     border: 1px solid var(--line);
@@ -377,29 +377,6 @@ footer {
     font-size: 12px;
 }
 
-/* Stats card */
-.statsCard {
-    margin-top: 8px;
-    border: 1px solid var(--line);
-    background: linear-gradient(180deg, #fafafa, #fff);
-    border-radius: 12px;
-    padding: 10px 12px;
-}
-
-.statsSentence {
-    font-size: 14px;
-    color: #374151;
-    line-height: 1.6;
-}
-
-.statsSentence .num {
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-}
-
-.statsSentence .muted {
-    color: #6b7280;
-}
 
 /* AI item card */
 .aiItem {
@@ -581,7 +558,7 @@ footer {
     }
     
     .ratio {
-        padding-top: 58%;
+        padding-top: 80%; /* Increased from 58% to 80% for more height on mobile */
     }
     
     /* Table mobile styles */
@@ -850,12 +827,15 @@ footer {
     
     .shop-cards {
         grid-template-columns: 1fr;
-        max-height: 320px;
-        overflow-y: auto;
+        min-height: auto; /* Remove fixed height */
+        max-height: 240px; /* Height for exactly 3 cards (3 × 80px per card) */
+        overflow-y: auto; /* Enable vertical scrolling */
         overflow-x: hidden;
         scrollbar-width: thin;
         scrollbar-color: var(--muted) transparent;
     }
+    
+    /* Remove the display none rule to allow scrolling to other cards */
     
     .shop-cards::-webkit-scrollbar {
         width: 4px;
@@ -928,6 +908,114 @@ header, main, footer {
     
     .keyword-cloud .tagcloud {
         font-size: 16px;
+    }
+}
+
+/* =============================================================================
+   TYPEWRITER RECOMMENDATION SYSTEM
+   ============================================================================= */
+
+/* Product ticker display */
+.heroTicker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 8px;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+}
+
+.heroTickImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #f3f4f6;
+    flex: 0 0 40px; /* Force fixed width */
+}
+
+.heroTickMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1; /* Take remaining space */
+    overflow: hidden; /* Prevent text overflow from affecting layout */
+}
+
+.heroTickTitle {
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 400px; /* Allow longer titles */
+    color: var(--ink);
+}
+
+.heroTickCounts {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* Typewriter text area */
+.statsCard {
+    display: block !important;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    margin-top: 8px;
+    width: 100%; /* Ensure consistent width */
+    box-sizing: border-box; /* Include padding in width calculation */
+    min-height: 100px; /* Increased from 80px to 100px */
+    height: 100px; /* Increased from 80px to 100px */
+    display: flex !important; /* Use flex for better content alignment */
+    align-items: center; /* Center content vertically */
+}
+
+.typeLine {
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 1.6em;
+    max-height: 76px; /* Updated from 56px to 76px (100px - 24px padding) */
+    white-space: normal; /* Allow text wrapping */
+    word-wrap: break-word; /* Break long words */
+    overflow-wrap: break-word; /* Modern alternative to word-wrap */
+    border-right: 2px solid #d1d5db;
+    color: var(--ink);
+    max-width: 100%; /* Prevent container expansion */
+    overflow: hidden; /* Hide overflow text if too long */
+    display: flex;
+    align-items: center; /* Center text vertically */
+    width: 100%;
+}
+
+.typeLine.done {
+    border-right-color: transparent;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .heroTickImg {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .heroTickTitle {
+        max-width: 300px; /* Allow longer titles on mobile */
+    }
+    
+    .statsCard {
+        height: 85px; /* Increased from 70px to 85px on mobile */
+        min-height: 85px;
+    }
+    
+    .typeLine {
+        font-size: 14px;
+        max-height: 61px; /* Updated from 46px to 61px (85px - 24px padding) */
     }
 }
 
