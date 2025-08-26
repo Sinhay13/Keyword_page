@@ -761,7 +761,7 @@ footer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 12px;
-    min-height: 500px; /* Fixed minimum height to prevent jumping */
+    min-height: 450px; /* Fixed minimum height to prevent jumping */
     align-content: start; /* Align cards to top when fewer items */
 }
 

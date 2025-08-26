@@ -1,0 +1,389 @@
+{
+  "Sheet1": [
+    {
+      "genre": "食品",
+      "secondary_genre": "食品",
+      "shop": "yamagoiida",
+      "hash": "13xrklq-147ccp1-45rypx",
+      "shop_id": 387193
+    },
+    {
+      "genre": "食品",
+      "secondary_genre": "スイーツ・お菓子",
+      "shop": "imokuniya",
+      "hash": "147r6ap-45rypx-133vx0s",
+      "shop_id": 399321
+    },
+    {
+      "genre": "食品",
+      "secondary_genre": "水・ソフトドリンク",
+      "shop": "lifedrinkcompany",
+      "hash": "12jtk4v-31tjy1-129f4u8",
+      "shop_id": 379776
+    },
+    {
+      "genre": "食品",
+      "secondary_genre": "ビール・洋酒",
+      "shop": "mywineclub",
+      "hash": "13nv4eq-147ccp1-7gvrg1",
+      "shop_id": 237117
+    },
+    {
+      "genre": "食品",
+      "secondary_genre": "日本酒・焼酎",
+      "shop": "issyusouden",
+      "hash": "12jwpmu-13xcr02-6wtek4",
+      "shop_id": 277065
+    },
+    {
+      "genre": "ファッション",
+      "secondary_genre": "レディースファッション",
+      "shop": "darkangel",
+      "hash": "13xuq3p-11fd69c-16f968t",
+      "shop_id": 224379
+    },
+    {
+      "genre": "ファッション",
+      "secondary_genre": "メンズファッション",
+      "shop": "shirtshouse",
+      "hash": "11zxi8w-12jtk4v-3vsd0y",
+      "shop_id": 253792
+    },
+    {
+      "genre": "ファッション",
+      "secondary_genre": "靴",
+      "shop": "nike-official",
+      "hash": "13xrklq-5jpz6s-12uhfxf",
+      "shop_id": 389886
+    },
+    {
+      "genre": "ファッション",
+      "secondary_genre": "バッグ・小物・ブランド雑貨",
+      "shop": "norganic",
+      "hash": "133srit-10lb7og-13dvipr",
+      "shop_id": 355020
+    },
+    {
+      "genre": "ファッション",
+      "secondary_genre": "インナー・下着・ナイトウェア",
+      "shop": "bambi-water",
+      "hash": "15bsqkk-11zcdna-5tpkvr",
+      "shop_id": 294199
+    },
+    {
+      "genre": "ファッション",
+      "secondary_genre": "ジュエリー・アクセサリー",
+      "shop": "craife",
+      "hash": "129bzc9-13dae45-11pcryb",
+      "shop_id": 404442
+    },
+    {
+      "genre": "ファッション",
+      "secondary_genre": "腕時計",
+      "shop": "unboxroom",
+      "hash": "13xrklq-134h1me-133vx0s",
+      "shop_id": 388521
+    },
+    {
+      "genre": "ファッション",
+      "secondary_genre": "キッズ・ベビー・マタニティ",
+      "shop": "netbaby",
+      "hash": "133vx0s-13xuq3p-115vjo0",
+      "shop_id": 212232
+    },
+    {
+      "genre": "ファッション",
+      "secondary_genre": "キッズファッション",
+      "shop": "devirockstore",
+      "hash": "129x3xv-12tt5tu-13egnbd",
+      "shop_id": 243484
+    },
+    {
+      "genre": "ファッション",
+      "secondary_genre": "べビーファッション",
+      "shop": "ponopono",
+      "hash": "12tt5tu-11p9mgc-8kxbpw",
+      "shop_id": 345403
+    },
+    {
+      "genre": "美容・健康",
+      "secondary_genre": "ダイエット・健康",
+      "shop": "shimin2",
+      "hash": "11zucqx-76w5r2-115af2e",
+      "shop_id": 311652
+    },
+    {
+      "genre": "美容・健康",
+      "secondary_genre": "医薬品・コンタクト・介護",
+      "shop": "candymagic",
+      "hash": "11zxi8w-8kxbpw-12tec86",
+      "shop_id": 250374
+    },
+    {
+      "genre": "美容・健康",
+      "secondary_genre": "美容・コスメ・香水",
+      "shop": "attenir",
+      "hash": "13xrklq-11zucqx-5jpz6s",
+      "shop_id": 383198
+    },
+    {
+      "genre": "エンタメ・家電",
+      "secondary_genre": "スマートフォン・タブレット",
+      "shop": "gracevally",
+      "hash": "11zcdna-6mwyd4-11fa0rd",
+      "shop_id": 411453
+    },
+    {
+      "genre": "エンタメ・家電",
+      "secondary_genre": "パソコン・周辺機器",
+      "shop": "starfocus",
+      "hash": "15bsqkk-5jpz6s-115af2e",
+      "shop_id": 299852
+    },
+    {
+      "genre": "エンタメ・家電",
+      "secondary_genre": "TV・オーディオ・カメラ",
+      "shop": "anker",
+      "hash": "15bsqkk-12jbl18-8ku67x",
+      "shop_id": 294713
+    },
+    {
+      "genre": "エンタメ・家電",
+      "secondary_genre": "家電",
+      "shop": "brita",
+      "hash": "129tyfw-13og90c-5iyjl8",
+      "shop_id": 368318
+    },
+    {
+      "genre": "エンタメ・家電",
+      "secondary_genre": "おもちゃ",
+      "shop": "arcraiz",
+      "hash": "129bzc9-13xcr02-6wtek4",
+      "shop_id": 407065
+    },
+    {
+      "genre": "エンタメ・家電",
+      "secondary_genre": "ホビー",
+      "shop": "flavor-kitchen",
+      "hash": "11pur1y-1337mx7-115af2e",
+      "shop_id": 305952
+    },
+    {
+      "genre": "住まい・暮らし",
+      "secondary_genre": "インテリア・寝具・収納",
+      "shop": "33taiyo",
+      "hash": "13xrklq-12tt5tu-6wtek4",
+      "shop_id": 383465
+    },
+    {
+      "genre": "住まい・暮らし",
+      "secondary_genre": "日用品雑貨・文房具・手芸",
+      "shop": "rakuten24",
+      "hash": "12twbbt-80uytz-13xuq3p",
+      "shop_id": 261122
+    },
+    {
+      "genre": "住まい・暮らし",
+      "secondary_genre": "キッチン用品・食器・調理器具",
+      "shop": "eunicedress",
+      "hash": "12tt5tu-7qs7n1-133vx0s",
+      "shop_id": 346621
+    },
+    {
+      "genre": "住まい・暮らし",
+      "secondary_genre": "花・ガーデン・DIY",
+      "shop": "oimoya",
+      "hash": "13dvipr-11zcdna-15lsc9j",
+      "shop_id": 204128
+    },
+    {
+      "genre": "住まい・暮らし",
+      "secondary_genre": "ペット・ペットグッズ",
+      "shop": "styleplus",
+      "hash": "11zxi8w-15lsc9j-11zcdna",
+      "shop_id": 252841
+    },
+    {
+      "genre": "住まい・暮らし",
+      "secondary_genre": "カタログギフト・チケット",
+      "shop": "rakkenshop",
+      "hash": "129bzc9-12t8188-6wzpk2",
+      "shop_id": 405809
+    },
+    {
+      "genre": "車・スポーツ",
+      "secondary_genre": "スポーツ・アウトドア",
+      "shop": "hf-rns",
+      "hash": "5sy5a7-15bsqkk-11pur1y",
+      "shop_id": 192930
+    },
+    {
+      "genre": "車・スポーツ",
+      "secondary_genre": "車用品・バイク用品",
+      "shop": "tire-zero",
+      "hash": "15lsc9j-80uytz-11fd69c",
+      "shop_id": 281143
+    },
+    {
+      "genre": "車・スポーツ",
+      "secondary_genre": "ゴルフ",
+      "shop": "e-techpowershop",
+      "hash": "11pcryb-3bt5n0-1298tua",
+      "shop_id": 429056
+    },
+    {
+      "genre": "食品",
+      "secondary_genre": "食品",
+      "shop": "kouragumi",
+      "hash": "12twbbt-3bt5n0-6wtek4",
+      "shop_id": 269065
+    },
+    {
+      "genre": "食品",
+      "secondary_genre": "食品",
+      "shop": "shizennoyakata",
+      "hash": "13dvipr-13nd5b3-11pcryb",
+      "shop_id": 207342
+    },
+    {
+      "genre": "食品",
+      "secondary_genre": "食品",
+      "shop": "jcrops",
+      "hash": "5sy5a7-14h8sw1-13xuq3p",
+      "shop_id": 194822
+    },
+    {
+      "genre": "食品",
+      "secondary_genre": "食品",
+      "shop": "sonoshokuan",
+      "hash": "129bzc9-8uwxev-8ku67x",
+      "shop_id": 400213
+    },
+    {
+      "genre": "食品",
+      "secondary_genre": "食品",
+      "shop": "kumamoto-food",
+      "hash": "129x3xv-115af2e-16qbvn1",
+      "shop_id": 245288
+    },
+    {
+      "genre": "食品",
+      "secondary_genre": "食品",
+      "shop": "chashoan",
+      "hash": "13xuq3p-7gsly2-6wwk23",
+      "shop_id": 226715
+    },
+    {
+      "genre": "美容・健康",
+      "secondary_genre": "美容・健康",
+      "shop": "q1st",
+      "hash": "129tyfw-27uqv4-13xuq3p",
+      "shop_id": 369422
+    },
+    {
+      "genre": "美容・健康",
+      "secondary_genre": "美容・健康",
+      "shop": "mariness",
+      "hash": "129bzc9-13xcr02-12tt5tu",
+      "shop_id": 407034
+    },
+    {
+      "genre": "美容・健康",
+      "secondary_genre": "美容・健康",
+      "shop": "teamo",
+      "hash": "12jwpmu-12tt5tu-76t093",
+      "shop_id": 273464
+    },
+    {
+      "genre": "美容・健康",
+      "secondary_genre": "美容・健康",
+      "shop": "kyunan",
+      "hash": "13dvipr-13egnbd-13dvipr",
+      "shop_id": 208420
+    },
+    {
+      "genre": "美容・健康",
+      "secondary_genre": "美容・健康",
+      "shop": "seedcoms",
+      "hash": "12jwpmu-7qyimz-45rypx",
+      "shop_id": 270693
+    },
+    {
+      "genre": "美容・健康",
+      "secondary_genre": "美容・健康",
+      "shop": "nail-koubouu",
+      "hash": "13xuq3p-11pur1y-115af2e",
+      "shop_id": 223052
+    },
+    {
+      "genre": "エンタメ・家電",
+      "secondary_genre": "エンタメ・家電",
+      "shop": "kobe-beauty-labo",
+      "hash": "12twbbt-129x3xv-133srit",
+      "shop_id": 262435
+    },
+    {
+      "genre": "住まい・暮らし",
+      "secondary_genre": "住まい・暮らし",
+      "shop": "yamasoro",
+      "hash": "129bzc9-7qyimz-1479772",
+      "shop_id": 400649
+    },
+    {
+      "genre": "住まい・暮らし",
+      "secondary_genre": "住まい・暮らし",
+      "shop": "tansu",
+      "hash": "5sy5a7-45rypx-31tjy1",
+      "shop_id": 199397
+    },
+    {
+      "genre": "住まい・暮らし",
+      "secondary_genre": "住まい・暮らし",
+      "shop": "dondon",
+      "hash": "129x3xv-129f4u8-1659kju",
+      "shop_id": 247678
+    },
+    {
+      "genre": "車・スポーツ",
+      "secondary_genre": "車・スポーツ",
+      "shop": "grong",
+      "hash": "13xrklq-14h8sw1-12t8188",
+      "shop_id": 384858
+    },
+    {
+      "genre": "車・スポーツ",
+      "secondary_genre": "車・スポーツ",
+      "shop": "bbtown",
+      "hash": "13dvipr-6wtek4-8axq0x",
+      "shop_id": 206504
+    },
+    {
+      "genre": "車・スポーツ",
+      "secondary_genre": "車・スポーツ",
+      "shop": "rinne",
+      "hash": "13nv4eq-7gywy0-1337mx7",
+      "shop_id": 230759
+    },
+    {
+      "genre": "車・スポーツ",
+      "secondary_genre": "車・スポーツ",
+      "shop": "yiprefer",
+      "hash": "12jwpmu-13xcr02-2huck3",
+      "shop_id": 277095
+    },
+    {
+      "genre": "車・スポーツ",
+      "secondary_genre": "車・スポーツ",
+      "shop": "iwiss",
+      "hash": "12jtk4v-129x3xv-76t093",
+      "shop_id": 372464
+    },
+    {
+      "genre": "車・スポーツ",
+      "secondary_genre": "車・スポーツ",
+      "shop": "creaswing",
+      "hash": "11pcryb-147r6ap-45rypx",
+      "shop_id": 423993
+    }
+  ]
+}

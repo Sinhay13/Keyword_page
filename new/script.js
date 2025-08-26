@@ -1355,7 +1355,7 @@ function selectCategory(categoryName) {
  */
 async function fetchShopsData() {
     try {
-        const response = await fetch('35_shops.json');
+        const response = await fetch('shops.json');
         if (!response.ok) throw new Error('Failed to fetch shops data');
         
         // Get raw text first to handle NaN values
@@ -1522,19 +1522,31 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeShopCategories();
 });
 
-// Auto-fill HubSpot form using URL parameters (the working method!)
+// Auto-fill HubSpot form using iframe parameter injection
 setTimeout(() => {
-    if (shop_id_url && hash) {
-        const currentUrl = new URL(window.location.href);
+    if (shop_id_url) {
+        // Wait for HubSpot iframe to load
+        const checkForIframe = setInterval(() => {
+            const iframe = document.querySelector('iframe[src*="hsforms.net"]');
+            if (iframe && iframe.src) {
+                const iframeSrc = new URL(iframe.src);
+                
+                // Check if shop_id_url is not already in the iframe URL
+                if (!iframeSrc.searchParams.has('shop_id_url')) {
+                    // Add shop_id_url parameter to iframe URL
+                    iframeSrc.searchParams.set('shop_id_url', shop_id_url);
+                    // Update iframe src to trigger HubSpot auto-fill
+                    iframe.src = iframeSrc.toString();
+                }
+                
+                clearInterval(checkForIframe);
+            }
+        }, 500);
         
-        // Add the parameters that work
-        if (!currentUrl.searchParams.has('shop_id_url')) {
-            currentUrl.searchParams.set('shop_id_url', shop_id_url);
-            // Reload with new URL to trigger HubSpot auto-fill
-            window.location.href = currentUrl.toString();
-        }
+        // Clear interval after 10 seconds if iframe not found
+        setTimeout(() => clearInterval(checkForIframe), 10000);
     }
-}, 1000);
+}, 2000);
 
 /* =============================================================================
    3D KEYWORD CLOUD BACKGROUND (TagCloud.js)
