@@ -2,92 +2,72 @@
 "FAQ": [
     {
     "Q": {
-        "EN": "Why is my CPC high but ROAS low?",
-        "JP": "CPCが高く、ROASが低いのはなぜですか？"
+        "EN": "Can't we see these kinds of keywords in RMS?",
+        "JP": "RMSでこういうキーワードって見れないんですか？"
     },
     "A": {
-        "EN": "This happens when CPC is set too high compared to returns.",
-        "JP": "CPCの設定が高すぎる可能性があります。"
-    },
-    "Action": {
-        "EN": "Insert keywords into product titles/descriptions if only CPC ads are showing. Exclude inefficient keywords if bidding via keyword CPC.",
-        "JP": "商品CPCでのみ露出している場合は、商品名・説明文にキーワードを挿入。キーワードCPC入札の場合は、除外を検討。"
+        "EN": "Only a very limited portion is viewable in RMS, making it difficult to collect data useful for improvements.",
+        "JP": "ごく一部閲覧可能で限定的であるため、改善に役立つデータ収集が困難です。"
     }
     },
     {
     "Q": {
-        "EN": "My product ranks high in SEO, but clicks are taken by RPP ads. What should I do?",
-        "JP": "SEO順位が高いのに、RPP広告にクリックを取られるのはなぜですか？"
+        "EN": "Do I need to provide anything for the report creation?",
+        "JP": "レポートを作成するにあたりなにか提供する必要がありますか？"
     },
     "A": {
-        "EN": "Even with good SEO, competitors using RPP may steal clicks.",
-        "JP": "競合のRPP出稿によりクリックを奪われる可能性があります。"
-    },
-    "Action": {
-        "EN": "Check reference CPC and try bidding via keyword CPC.",
-        "JP": "目安CPCを確認しつつ、キーワードCPCで出稿してみる。"
+        "EN": "Please rest assured that we only use publicly available data from Rakuten Marketplace and do not collect any personal information held by your store.",
+        "JP": "店舗様内が保有する個人情報などを取得することなく、楽天市場で公開されているデータのみを活用するためご安心ください。"
     }
     },
     {
     "Q": {
-        "EN": "My product has SEO visibility but doesn’t appear in RPP. How to improve?",
-        "JP": "SEOの評価はあるのに、RPPで掲載されない場合は？"
+        "EN": "How can I improve by looking at the keyword report?",
+        "JP": "キーワードレポートを見てどのように改善できますか？"
     },
     "A": {
-        "EN": "SEO is working, but no RPP coverage.",
-        "JP": "RPPに未出稿、または予算不足の可能性があります。"
-    },
-    "Action": {
-        "EN": "Start RPP ads, increase budget or CPC, and add high-ranking organic keywords to keyword CPC.",
-        "JP": "RPP出稿、予算増額やCPC単価調整。自然検索10位以内のワードをキーワードCPCに設定。"
+        "EN": "You can boost performance by finding keywords to add for SEO, identifying keywords to focus on for RPP, or adjusting CPC for keywords that are being over-bid.",
+        "JP": "SEOに追加すべきキーワードを見つけたり、RPPに注力するキーワード、またはかけすぎているキーワードのCPC調整などに活用することで、パフォーマンスをアップささせることができます。"
     }
     },
     {
     "Q": {
-        "EN": "My product shows in RPP #1, but SEO rank is low. What’s wrong?",
-        "JP": "RPPでは1位だが、SEO順位が低いのはなぜ？"
+        "EN": "I don't understand the keyword report very well.",
+        "JP": "キーワードレポートを見てもよく分からないのですが。"
     },
     "A": {
-        "EN": "CPC may be set too high, wasting budget.",
-        "JP": "CPCの設定が高すぎる可能性があります。"
-    },
-    "Action": {
-        "EN": "Lower RPP CPC or exclude keywords.",
-        "JP": "RPPのCPCを下げる、またはキーワードを除外。"
+        "EN": "We also offer free consultation sessions, so please feel free to reach out to us.",
+        "JP": "無料相談会も実施しておりますため、ぜひご用命ください。"
     }
     },
     {
     "Q": {
-        "EN": "My product doesn’t show in Rakuten search at all. How to fix?",
-        "JP": "楽天市場の検索にヒットしない場合はどうすればいいですか？"
+        "EN": "How long does it take from application to report delivery?",
+        "JP": "申し込みからレポート提供までにどれくらいの期間かかりますか？"
     },
     "A": {
-        "EN": "Keywords are missing from the product title/description.",
-        "JP": "キーワード対策が不足しています。"
-    },
-    "Action": {
-        "EN": "Insert detected keywords in order of importance into product names and descriptions. Add related terms.",
-        "JP": "出現キーワードを商品名に順番で挿入し、関連ワードも商品名・説明文に追加。"
+        "EN": "At the fastest, it can be delivered within 24 hours, but generally within 2-3 business days.",
+        "JP": "早いと24時間以内で、概ね2-3営業日以内に提供できます。"
     }
     },
     {
     "Q": {
-        "EN": "Can I analyze competitors’ keyword strategy?",
-        "JP": "競合店舗のキーワード戦略は分析できますか？"
+        "EN": "What should I do if I want to use this service continuously?",
+        "JP": "継続して利用したい場合はどうすればいいですか？"
     },
     "A": {
-        "EN": "Yes. Reports for competing or similar stores can be checked.",
-        "JP": "はい。競合/類似店舗のキーワードレポートを確認可能です。"
+        "EN": "While we offer report-only services, they are also bundled with several other services. We can also create RPP data analysis reports based on your store's overall performance, so please apply for a free data analysis report briefing session.",
+        "JP": "レポートだけのサービスの場合もありますが、いくつかのサービスに付帯もしております。他にも店舗全体のパフォーマンスからRPPのデータ分析レポートも作成d来ますので、一度無料データ分析レポート報告会をお申込みください。"
     }
     },
     {
     "Q": {
-        "EN": "Who can support with RPP operations and keyword reports?",
-        "JP": "RPP運用やキーワードレポートのサポートはどこで受けられますか？"
+        "EN": "Can I also view competitor store data?",
+        "JP": "競合店舗のデータも閲覧できますか？"
     },
     "A": {
-        "EN": "TENKI-JAPAN provides data analysis and RPP management via its automation system. Contact: auto-pack-team@tenki-japan.co.jp",
-        "JP": "TENKI-JAPANが自社システムで分析と運用を支援します。 連絡先: auto-pack-team@tenki-japan.co.jp"
+        "EN": "Yes, it's possible. Since we utilize search result data from within Rakuten Marketplace, we can check data for all stores.",
+        "JP": "はい、可能です。楽天市場内の検索結果データを活用しているので、すべての店舗データを確認することが可能です。"
     }
     }
 ]

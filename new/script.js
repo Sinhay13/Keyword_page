@@ -10,8 +10,8 @@
 // Translation dictionary for Japanese and English content
 const I18N = {
     en: {
-        navProcess: 'Process', 
-        navSample: 'Sample', 
+        navProcess: 'Service Flow', 
+        navSample: 'Your Shop Demo', 
         ctaTop: 'Get Your Free Sample',
         preparedLabel: 'Prepared for', 
         promoText: 'NEW | Free AI analysis available for a limited time',
@@ -22,7 +22,7 @@ const I18N = {
         tag1: 'Privacy-safe', 
         tag2: 'Actionable', 
         tag3: 'Rakuten-focused',
-        slideCaption: 'Sample preview. Full PDF includes keyword tables and recommendations.',
+        slideCaption: 'Preview screen. In the full version, you can view data for up to 20 products.',
         b1t: 'Identify effective keywords', 
         b1d: 'Identify the keywords to target in RPP or organic search',
         b2t: 'Compare the market and identify gaps', 
@@ -30,7 +30,7 @@ const I18N = {
         b3t: 'Search marketing strategy planning', 
         b3d: 'Discover specific SEO keywords and methods for adjusting RPP keywords',
         oppTitle: 'Choose an item', 
-        oppSub: 'Click a product to update the keywords on the right',
+        oppSub: 'Click a product to view its keywords on the right.',
         kwTitle: 'Selected main keywords', 
         kwSub: 'RPP ranking, organic search ranking, verification time', 
         lockNote: 'After submitting the form, we will send you the full PDF by email.',
@@ -42,7 +42,7 @@ const I18N = {
         aiTitle: 'Action plan from AI <span class="badge">NEW</span>', 
         aiSub: 'Based on the report, we automatically generate title revision proposals and RPP addition suggestions for each product.',
         shopsTitle: 'Case study of Rakuten First Half-Year Ranking 2025 award-winning shops', 
-        shopsSub: 'Featuring keyword reports for the genre awards',
+        shopsSub: 'Keyword report of genre awards is published',
         s1t: 'Analyze', 
         s1d: 'We assess RPP and organic ranks.', 
         s2t: 'Report', 
@@ -59,17 +59,17 @@ const I18N = {
         labNotes: 'Notes',
         agreeText: 'I agree to be contacted by TENKI-JAPAN about this request.', 
         submitBtn: 'Request report',
-        footProcess: 'Process', 
-        footSample: 'Sample', 
-        samplePdfLink: 'Sample PDF',
+        footProcess: 'Service Flow', 
+        footSample: 'Your Shop Demo', 
+        samplePdfLink: 'Your Shop PDF Example',
         viewSampleReport: 'View Sample Report',
         langButton: '日本語',
         faqTitle: 'FAQ',
         faqAction: 'Action'
     },
     ja: {
-        navProcess: '進め方', 
-        navSample: 'サンプル', 
+        navProcess: 'サービスの流れ', 
+        navSample: '貴店デモ', 
         ctaTop: '無料サンプルを申し込む',
         preparedLabel: 'ご提供先', 
         promoText: 'NEW｜期間限定で無料AI分析提供',
@@ -80,7 +80,7 @@ const I18N = {
         tag1: 'プライバシー配慮', 
         tag2: '実行可能', 
         tag3: '楽天特化',
-        slideCaption: 'プレビュー。完全版PDFにはキーワード表と提案が含まれます。',
+        slideCaption: 'プレビュー画面。完全版では最大20商品分のデータが閲覧できます。',
         b1t: '効果的なキーワードを特定', 
         b1d: 'RPPまたは自然検索で狙うべきキーワードを特定',
         b2t: '市場比較してギャップを把握', 
@@ -88,19 +88,19 @@ const I18N = {
         b3t: '検索マーケティング戦略立案', 
         b3d: '具体的なSEOキーワード発見及び RPPのキーワード調整の方法の発見',
         oppTitle: '商品を選択', 
-        oppSub: 'クリックで右側のキーワードが切り替わります',
+        oppSub: '商品をクリックすると右側でキーワードが閲覧できます。',
         kwTitle: '主要キーワード一部抜粋', 
         kwSub: 'RPP順位、自然検索順位、確認時間', 
         lockNote: 'フォームを送信後、完全版PDFをメールでお送りします。',
         thKeyword: 'キーワード', 
         thRpp: 'RPP順位', 
-        thOrg: '自然順位', 
-        thChecked: '計測時刻', 
+        thOrg: '自然検索順位', 
+        thChecked: '確認時間', 
         thAction: 'アクション',
         aiTitle: 'AIからのアクションプラン <span class="badge">NEW</span>', 
         aiSub: 'レポートをもとに、商品ごとにタイトルの修正案とRPP追加案を自動生成します。',
         shopsTitle: '楽天上半期ランキング2025受賞店舗の事例', 
-        shopsSub: '様々な業界の成功している楽天ショップのキーワードレポートサンプルをご覧ください。',
+        shopsSub: 'ジャンル賞のキーワードレポートを掲載',
         s1t: '分析', 
         s1d: 'RPPと自然順位を評価します。', 
         s2t: 'レポート', 
@@ -117,9 +117,9 @@ const I18N = {
         labNotes: 'メモ',
         agreeText: '本申込みに関する連絡をTENKI-JAPANから受け取ることに同意します。', 
         submitBtn: '申し込む',
-        footProcess: '進め方', 
-        footSample: 'サンプル', 
-        samplePdfLink: 'サンプルPDF',
+        footProcess: 'サービスの流れ', 
+        footSample: '貴店デモ', 
+        samplePdfLink: '貴店PDF例',
         viewSampleReport: 'サンプルレポートを見る',
         langButton: 'EN',
         faqTitle: 'よくある質問',
@@ -490,8 +490,8 @@ const H = {
     image: ['image_url', 'img', 'image', '商品画像URL', '画像URL', '画像URL1', '画像1'],
     keyword: ['keyword', 'kw', 'term', 'キーワード'],
     rpp: ['rpp', 'rpp_rank', 'rppRank', 'RPP順位', 'RPP順'],
-    org: ['seo', 'organic', 'organic_rank', 'org', 'rank', '自然順位', '自然'],
-    checked: ['checked', 'date', 'timestamp', 'time', '計測時刻', '取得日時', '計測日時', '取得時刻'],
+    org: ['seo', 'organic', 'organic_rank', 'org', 'rank', '自然検索順位', '自然'],
+    checked: ['checked', 'date', 'timestamp', 'time', '確認時間', '取得日時', '計測日時', '取得時刻'],
     slide: ['slide', 'スライド', 'ページ']
 };
 
@@ -881,7 +881,7 @@ async function buildFromCsv() {
             const row = {
                 keyword: (pick(rr, H.keyword) || findContains(rr, ['キーワード', 'keyword', 'kw', 'term', '用語', '検索', 'ワード']) || firstTextValue(rr)),
                 rppRank: pick(rr, H.rpp) || findContains(rr, ['RPP', 'rpp']),
-                organicRank: pick(rr, H.org) || findContains(rr, ['自然順位', '自然', 'organic', 'seo']),
+                organicRank: pick(rr, H.org) || findContains(rr, ['自然検索順位', '自然', 'organic', 'seo']),
                 checkedAt: pick(rr, H.checked) || findContains(rr, ['計測', '取得', '時刻', 'timestamp', 'date', 'time'])
             };
             rowsAll.push(row);
@@ -1522,31 +1522,50 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeShopCategories();
 });
 
-// Auto-fill HubSpot form using iframe parameter injection
-setTimeout(() => {
-    if (shop_id_url) {
-        // Wait for HubSpot iframe to load
-        const checkForIframe = setInterval(() => {
-            const iframe = document.querySelector('iframe[src*="hsforms.net"]');
-            if (iframe && iframe.src) {
-                const iframeSrc = new URL(iframe.src);
-                
-                // Check if shop_id_url is not already in the iframe URL
-                if (!iframeSrc.searchParams.has('shop_id_url')) {
-                    // Add shop_id_url parameter to iframe URL
-                    iframeSrc.searchParams.set('shop_id_url', shop_id_url);
-                    // Update iframe src to trigger HubSpot auto-fill
-                    iframe.src = iframeSrc.toString();
+// Auto-fill HubSpot form by intercepting iframe creation (single load)
+if (shop_id_url) {
+    // Create MutationObserver to catch iframe creation before it loads
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                // Check if added node is an iframe or contains iframes
+                if (node.nodeType === Node.ELEMENT_NODE) {
+                    let iframes = [];
+                    
+                    if (node.tagName === 'IFRAME') {
+                        iframes = [node];
+                    } else if (node.querySelectorAll) {
+                        iframes = Array.from(node.querySelectorAll('iframe'));
+                    }
+                    
+                    // Process HubSpot iframes
+                    iframes.forEach((iframe) => {
+                        if (iframe.src && iframe.src.includes('hsforms.net')) {
+                            const iframeSrc = new URL(iframe.src);
+                            
+                            // Add shop_id_url parameter if not already present
+                            if (!iframeSrc.searchParams.has('shop_id_url')) {
+                                iframeSrc.searchParams.set('shop_id_url', shop_id_url);
+                                iframe.src = iframeSrc.toString();
+                            }
+                        }
+                    });
                 }
-                
-                clearInterval(checkForIframe);
-            }
-        }, 500);
-        
-        // Clear interval after 10 seconds if iframe not found
-        setTimeout(() => clearInterval(checkForIframe), 10000);
-    }
-}, 2000);
+            });
+        });
+    });
+    
+    // Start observing
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+    
+    // Stop observing after 15 seconds to prevent memory leaks
+    setTimeout(() => {
+        observer.disconnect();
+    }, 15000);
+}
 
 /* =============================================================================
    3D KEYWORD CLOUD BACKGROUND (TagCloud.js)
@@ -1977,5 +1996,3 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 } else {
     document.addEventListener('DOMContentLoaded', initFAQ);
 }
-
-

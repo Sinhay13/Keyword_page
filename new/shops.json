@@ -317,7 +317,7 @@
     },
     {
       "genre": "エンタメ・家電",
-      "secondary_genre": "エンタメ・家電",
+      "secondary_genre": "美容家電",
       "shop": "kobe-beauty-labo",
       "hash": "12twbbt-129x3xv-133srit",
       "shop_id": 262435
@@ -384,6 +384,20 @@
       "shop": "creaswing",
       "hash": "11pcryb-147r6ap-45rypx",
       "shop_id": 423993
+    },
+        {
+      "genre": "エンタメ・家電",
+      "secondary_genre": "おもちゃ",
+      "shop": "smile88",
+      "hash": "147r6ap-11fa0rd-8aukiy",
+      "shop_id":395312
+    },
+        {
+      "genre": "エンタメ・家電",
+      "secondary_genre": "スマートフォン・タブレット",
+      "shop": "gracevally",
+      "hash": "11zcdna-6mwyd4-11fa0rd",
+      "shop_id": 411453
     }
   ]
 }
