@@ -63,7 +63,9 @@ const I18N = {
         footSample: 'Sample', 
         samplePdfLink: 'Sample PDF',
         viewSampleReport: 'View Sample Report',
-        langButton: '日本語'
+        langButton: '日本語',
+        faqTitle: 'FAQ',
+        faqAction: 'Action'
     },
     ja: {
         navProcess: '進め方', 
@@ -119,7 +121,9 @@ const I18N = {
         footSample: 'サンプル', 
         samplePdfLink: 'サンプルPDF',
         viewSampleReport: 'サンプルレポートを見る',
-        langButton: 'EN'
+        langButton: 'EN',
+        faqTitle: 'よくある質問',
+        faqAction: 'アクション'
     }
 };
 
@@ -138,7 +142,7 @@ function applyI18n(lang) {
         'b1t', 'b1d', 'b2t', 'b2d', 'b3t', 'b3d', 'oppTitle', 'oppSub', 'kwTitle', 'kwSub', 'shopsTitle', 'shopsSub', 
         'thKeyword', 'thRpp', 'thOrg', 'thChecked', 'aiTitle', 'aiSub', 's1t', 's1d', 's2t', 
         's2d', 's3t', 's3d', 'reqTitle', 'reqSub', 'labShop', 'labUrl', 'labContact', 'labEmail', 
-        'labRms', 'labNotes', 'agreeText', 'submitBtn', 'footProcess', 'footSample', 'samplePdfLink'
+        'labRms', 'labNotes', 'agreeText', 'submitBtn', 'footProcess', 'footSample', 'samplePdfLink', 'faqTitle'
     ];
     
     // Update lock note if it exists
@@ -1039,6 +1043,7 @@ document.getElementById('footLangSwitch')?.addEventListener('click', () => {
     const kw = Array.isArray(it.keywords) ? it.keywords : SETTINGS.topKeywords;
     renderKeywords(kw || []);
     renderAiActions(SETTINGS.aiActions);
+    renderFAQ(); // Update FAQ when language changes
     setTimeout(setMobileListHeight, 0);
 });
 
@@ -1858,6 +1863,95 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
     initTypewriter();
 } else {
     document.addEventListener('DOMContentLoaded', initTypewriter);
+}
+
+/* =============================================================================
+   FAQ SYSTEM
+   ============================================================================= */
+
+let faqData = null;
+
+/**
+ * Load FAQ data from JSON file
+ */
+async function loadFAQData() {
+    try {
+        const response = await fetch('FAQ.json');
+        if (!response.ok) throw new Error('Failed to load FAQ data');
+        const data = await response.json();
+        faqData = data.FAQ || [];
+        return faqData;
+    } catch (error) {
+        console.error('Error loading FAQ data:', error);
+        return [];
+    }
+}
+
+/**
+ * Render FAQ section for current language
+ */
+function renderFAQ() {
+    const faqList = document.getElementById('faqList');
+    if (!faqList || !faqData) return;
+    
+    const lang = langState === 'en' ? 'EN' : 'JP';
+    const dict = I18N[langState] || I18N.ja;
+    
+    // Remove existing event listeners
+    const oldFaqList = faqList.cloneNode(false);
+    faqList.parentNode.replaceChild(oldFaqList, faqList);
+    
+    oldFaqList.innerHTML = faqData.map((item, index) => `
+        <div class="faq-item" data-index="${index}">
+            <button class="faq-question" type="button">
+                <span>${item.Q[lang] || ''}</span>
+                <span class="faq-arrow">▼</span>
+            </button>
+            <div class="faq-content">
+                <div class="faq-answer">${item.A[lang] || ''}</div>
+                ${item.Action && item.Action[lang] ? `
+                    <div class="faq-action">
+                        <div class="faq-action-label">${dict.faqAction}</div>
+                        ${item.Action[lang]}
+                    </div>
+                ` : ''}
+            </div>
+        </div>
+    `).join('');
+    
+    // Add fresh click handlers for FAQ items
+    oldFaqList.addEventListener('click', (e) => {
+        const button = e.target.closest('.faq-question');
+        if (!button) return;
+        
+        const item = button.closest('.faq-item');
+        const isExpanded = item.classList.contains('expanded');
+        
+        // Close all other items
+        oldFaqList.querySelectorAll('.faq-item').forEach(otherItem => {
+            if (otherItem !== item) {
+                otherItem.classList.remove('expanded');
+            }
+        });
+        
+        // Toggle current item
+        item.classList.toggle('expanded', !isExpanded);
+    });
+}
+
+/**
+ * Initialize FAQ system
+ */
+async function initFAQ() {
+    await loadFAQData();
+    renderFAQ();
+}
+
+// Initialize FAQ when page loads
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initFAQ();
+} else {
+    document.addEventListener('DOMContentLoaded', initFAQ);
 }
 
 

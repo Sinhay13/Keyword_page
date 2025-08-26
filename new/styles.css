@@ -912,6 +912,141 @@ header, main, footer {
 }
 
 /* =============================================================================
+   FAQ SECTION
+   ============================================================================= */
+
+/* FAQ section container */
+#faq {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* FAQ item container */
+.faq-item {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 0;
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+/* FAQ question button */
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 16px 0;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--ink);
+    transition: color 0.2s ease;
+}
+
+.faq-question:hover {
+    color: var(--brand);
+}
+
+/* FAQ arrow icon */
+.faq-arrow {
+    font-size: 12px;
+    color: var(--muted);
+    transition: transform 0.3s ease, color 0.2s ease;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+.faq-question:hover .faq-arrow {
+    color: var(--brand);
+}
+
+.faq-item.expanded .faq-arrow {
+    transform: rotate(180deg);
+}
+
+/* FAQ answer content */
+.faq-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 0 0 0;
+}
+
+.faq-item.expanded .faq-content {
+    max-height: 300px;
+    padding: 0 0 16px 0;
+}
+
+/* FAQ answer text */
+.faq-answer {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+/* FAQ action text */
+.faq-action {
+    background: #f8f9fa;
+    border-left: 3px solid var(--brand);
+    padding: 10px 12px;
+    border-radius: 0 6px 6px 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-2);
+}
+
+.faq-action-label {
+    font-weight: 600;
+    color: var(--brand);
+    margin-bottom: 4px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    #faq {
+        display: block !important;
+        visibility: visible !important;
+        padding: 24px 0;
+    }
+    
+    #faq .container {
+        padding: 0 16px;
+    }
+    
+    #faq .card {
+        margin: 0 auto;
+        display: block !important;
+    }
+    
+    .faq-question {
+        padding: 14px 0;
+        font-size: 14px;
+        min-height: 48px; /* Touch-friendly size */
+        display: flex !important;
+        align-items: center;
+    }
+    
+    .faq-answer, .faq-action {
+        font-size: 13px;
+    }
+    
+    .faq-item.expanded .faq-content {
+        max-height: 400px;
+    }
+}
+
+/* =============================================================================
    TYPEWRITER RECOMMENDATION SYSTEM
    ============================================================================= */
 

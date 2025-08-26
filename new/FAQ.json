@@ -1,0 +1,94 @@
+{
+"FAQ": [
+    {
+    "Q": {
+        "EN": "Why is my CPC high but ROAS low?",
+        "JP": "CPCが高く、ROASが低いのはなぜですか？"
+    },
+    "A": {
+        "EN": "This happens when CPC is set too high compared to returns.",
+        "JP": "CPCの設定が高すぎる可能性があります。"
+    },
+    "Action": {
+        "EN": "Insert keywords into product titles/descriptions if only CPC ads are showing. Exclude inefficient keywords if bidding via keyword CPC.",
+        "JP": "商品CPCでのみ露出している場合は、商品名・説明文にキーワードを挿入。キーワードCPC入札の場合は、除外を検討。"
+    }
+    },
+    {
+    "Q": {
+        "EN": "My product ranks high in SEO, but clicks are taken by RPP ads. What should I do?",
+        "JP": "SEO順位が高いのに、RPP広告にクリックを取られるのはなぜですか？"
+    },
+    "A": {
+        "EN": "Even with good SEO, competitors using RPP may steal clicks.",
+        "JP": "競合のRPP出稿によりクリックを奪われる可能性があります。"
+    },
+    "Action": {
+        "EN": "Check reference CPC and try bidding via keyword CPC.",
+        "JP": "目安CPCを確認しつつ、キーワードCPCで出稿してみる。"
+    }
+    },
+    {
+    "Q": {
+        "EN": "My product has SEO visibility but doesn’t appear in RPP. How to improve?",
+        "JP": "SEOの評価はあるのに、RPPで掲載されない場合は？"
+    },
+    "A": {
+        "EN": "SEO is working, but no RPP coverage.",
+        "JP": "RPPに未出稿、または予算不足の可能性があります。"
+    },
+    "Action": {
+        "EN": "Start RPP ads, increase budget or CPC, and add high-ranking organic keywords to keyword CPC.",
+        "JP": "RPP出稿、予算増額やCPC単価調整。自然検索10位以内のワードをキーワードCPCに設定。"
+    }
+    },
+    {
+    "Q": {
+        "EN": "My product shows in RPP #1, but SEO rank is low. What’s wrong?",
+        "JP": "RPPでは1位だが、SEO順位が低いのはなぜ？"
+    },
+    "A": {
+        "EN": "CPC may be set too high, wasting budget.",
+        "JP": "CPCの設定が高すぎる可能性があります。"
+    },
+    "Action": {
+        "EN": "Lower RPP CPC or exclude keywords.",
+        "JP": "RPPのCPCを下げる、またはキーワードを除外。"
+    }
+    },
+    {
+    "Q": {
+        "EN": "My product doesn’t show in Rakuten search at all. How to fix?",
+        "JP": "楽天市場の検索にヒットしない場合はどうすればいいですか？"
+    },
+    "A": {
+        "EN": "Keywords are missing from the product title/description.",
+        "JP": "キーワード対策が不足しています。"
+    },
+    "Action": {
+        "EN": "Insert detected keywords in order of importance into product names and descriptions. Add related terms.",
+        "JP": "出現キーワードを商品名に順番で挿入し、関連ワードも商品名・説明文に追加。"
+    }
+    },
+    {
+    "Q": {
+        "EN": "Can I analyze competitors’ keyword strategy?",
+        "JP": "競合店舗のキーワード戦略は分析できますか？"
+    },
+    "A": {
+        "EN": "Yes. Reports for competing or similar stores can be checked.",
+        "JP": "はい。競合/類似店舗のキーワードレポートを確認可能です。"
+    }
+    },
+    {
+    "Q": {
+        "EN": "Who can support with RPP operations and keyword reports?",
+        "JP": "RPP運用やキーワードレポートのサポートはどこで受けられますか？"
+    },
+    "A": {
+        "EN": "TENKI-JAPAN provides data analysis and RPP management via its automation system. Contact: auto-pack-team@tenki-japan.co.jp",
+        "JP": "TENKI-JAPANが自社システムで分析と運用を支援します。 連絡先: auto-pack-team@tenki-japan.co.jp"
+    }
+    }
+]
+}
