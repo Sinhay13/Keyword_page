@@ -195,10 +195,22 @@ function applyI18n(lang) {
 let shop_id_url = 'kakiemon';
 let hash = '11fd69c-147r6ap-1337mx7';
 
-// Parse URL query string for shop and hash parameters
+// Parse URL parameter in format: /?shopname_hash
 const urlParams = new URLSearchParams(window.location.search);
-shop_id_url = urlParams.get('shop_id_url') || shop_id_url;
-hash = urlParams.get('hash') || hash;
+const fullParam = window.location.search.slice(1); // Remove the '?' at the beginning
+
+if (fullParam && fullParam.includes('_')) {
+    // Split by the last underscore to separate shop_id from hash
+    const parts = fullParam.split('_');
+    if (parts.length >= 2) {
+        shop_id_url = parts[0];
+        hash = parts.slice(1).join('_'); // Join remaining parts in case hash contains underscores
+    }
+} else {
+    // Fallback to individual parameters for backward compatibility
+    shop_id_url = urlParams.get('shop_id_url') || shop_id_url;
+    hash = urlParams.get('hash') || hash;
+}
 
 const SETTINGS = {
     dataUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.json`,
