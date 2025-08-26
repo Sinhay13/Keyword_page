@@ -1060,6 +1060,9 @@ header, main, footer {
     border: 1px solid var(--line);
     border-radius: 10px;
     background: var(--card);
+    width: 600px; /* Increased fixed width */
+    max-width: 600px;
+    box-sizing: border-box;
 }
 
 .heroTickImg {
@@ -1097,35 +1100,33 @@ header, main, footer {
 
 /* Typewriter text area */
 .statsCard {
-    display: block !important;
+    display: flex !important;
     padding: 10px 12px;
     border: 1px solid var(--line);
     border-radius: 10px;
     background: var(--card);
     margin-top: 8px;
-    width: 100%; /* Ensure consistent width */
+    width: 600px; /* Increased fixed width - same as heroTicker */
+    max-width: 600px;
+    min-width: 600px;
     box-sizing: border-box; /* Include padding in width calculation */
-    min-height: 100px; /* Increased from 80px to 100px */
-    height: 100px; /* Increased from 80px to 100px */
-    display: flex !important; /* Use flex for better content alignment */
+    height: 60px; /* Fixed height for single line */
     align-items: center; /* Center content vertically */
+    overflow: hidden; /* Prevent container expansion */
 }
 
 .typeLine {
     font-size: 15px;
     line-height: 1.6;
-    min-height: 1.6em;
-    max-height: 76px; /* Updated from 56px to 76px (100px - 24px padding) */
-    white-space: normal; /* Allow text wrapping */
-    word-wrap: break-word; /* Break long words */
-    overflow-wrap: break-word; /* Modern alternative to word-wrap */
+    height: 1.6em; /* Fixed single line height */
+    white-space: nowrap; /* Single line only */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ... for cropped text */
     border-right: 2px solid #d1d5db;
     color: var(--ink);
-    max-width: 100%; /* Prevent container expansion */
-    overflow: hidden; /* Hide overflow text if too long */
+    width: 100%; /* Fixed width container */
     display: flex;
     align-items: center; /* Center text vertically */
-    width: 100%;
 }
 
 .typeLine.done {
@@ -1144,12 +1145,13 @@ header, main, footer {
     }
     
     .statsCard {
-        height: 85px; /* Increased from 70px to 85px on mobile */
-        min-height: 85px;
+        height: 50px; /* Fixed height for single line on mobile */
+        min-height: 50px;
+        max-width: 100%; /* Prevent expansion on mobile */
     }
     
     .typeLine {
         font-size: 14px;
-        max-height: 61px; /* Updated from 46px to 61px (85px - 24px padding) */
+        height: 1.4em; /* Fixed single line height for mobile */
     }
 }
