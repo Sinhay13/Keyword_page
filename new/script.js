@@ -4,7 +4,7 @@
  */
 
 /* =============================================================================
-   INTERNATIONALIZATION (I18N) CONFIGURATION
+    INTERNATIONALIZATION (I18N) CONFIGURATION
    ============================================================================= */
 
 // Translation dictionary for Japanese and English content
@@ -184,14 +184,33 @@ function applyI18n(lang) {
 }
 
 /* =============================================================================
-   APPLICATION SETTINGS AND CONFIGURATION
+    APPLICATION SETTINGS AND CONFIGURATION
    ============================================================================= */
+
+// function to test if parameters are correct or not
+const testParams = async (shop, hash) => {
+    const url = `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop}/report/20/${shop}-keywords-shop-${hash}.json`
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            return false; // URL doesn't exist or returns error
+        }
+        const data = await response.json();
+        // Check if data is empty
+        return data && typeof data === 'object' && Object.keys(data).length > 0;
+    } catch (error) {
+        //console.error('Fetch error:', error);
+        return false; // Network error or invalid JSON
+    }
+}
 
 // Default application settings - using zhong sample data.  
 
 // Default fallback values
 let shop_id_url = 'kakiemon';
 let hash = '11fd69c-147r6ap-1337mx7';
+let shop_id_url_test;
+let hash_test;
 
 // Parse URL parameter in format: /?shopname_hash
 const urlParams = new URLSearchParams(window.location.search);
@@ -201,150 +220,172 @@ if (fullParam && fullParam.includes('_')) {
     // Split by the last underscore to separate shop_id from hash
     const parts = fullParam.split('_');
     if (parts.length >= 2) {
-        shop_id_url = parts[0];
-        hash = parts.slice(1).join('_'); // Join remaining parts in case hash contains underscores
+        shop_id_url_test = parts[0];
+        hash_test = parts.slice(1).join('_'); // Join remaining parts in case hash contains underscores
     }
 } else {
     // Fallback to individual parameters for backward compatibility
-    shop_id_url = urlParams.get('shop_id_url') || shop_id_url;
-    hash = urlParams.get('hash') || hash;
+    shop_id_url_test = urlParams.get('shop_id_url') || shop_id_url;
+    hash_test = urlParams.get('hash') || hash;
 }
 
-const SETTINGS = {
-    dataUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.json`,
-    csvKeywordsUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.csv`,
-    csvItemsUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}-items.csv`,
-    sampleSlideUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.jpg`,
-    samplePdfUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.pdf`,
-    shopIdUrl: shop_id_url,
-    itemIdUrl: '',
-    itemImage: '',
-    itemTitle: '',
-    slides: 20,
-    kwCount: 238,
-    rppCount: 0,
-    // updatedAt: '2025-08-06 06:14',
-    topKeywords: [],
-    opportunities: [],
-    aiActions: []
-};
-
-// Parse URL parameters for configuration
-const q = new URLSearchParams(location.search);
-const qpLang = q.get('lang');
-let langState = (qpLang === 'en' ? 'en' : (qpLang === 'ja' ? 'ja' : (localStorage.getItem('lang') || 'ja')));
-
-// Demo gating - controls whether content is locked/blurred
-window.LOCKED = true;
-if (q.get('unlock') === '1') window.LOCKED = false;
-
-// Override settings from URL parameters
-if (q.get('shop')) SETTINGS.shopName = decodeURIComponent(q.get('shop'));
-if (q.get('shop_logo')) SETTINGS.shopLogo = decodeURIComponent(q.get('shop_logo'));
-if (q.get('logo')) SETTINGS.logoUrl = decodeURIComponent(q.get('logo'));
-if (q.get('slide')) SETTINGS.sampleSlideUrl = decodeURIComponent(q.get('slide'));
-if (q.get('pdf')) SETTINGS.samplePdfUrl = decodeURIComponent(q.get('pdf'));
-if (q.get('data')) SETTINGS.dataUrl = decodeURIComponent(q.get('data'));
-if (q.get('csv1')) SETTINGS.csvKeywordsUrl = decodeURIComponent(q.get('csv1'));
-if (q.get('csv2')) SETTINGS.csvItemsUrl = decodeURIComponent(q.get('csv2'));
-if (q.get('shop_id')) SETTINGS.shopIdUrl = decodeURIComponent(q.get('shop_id'));
-if (q.get('item_id')) SETTINGS.itemIdUrl = decodeURIComponent(q.get('item_id'));
-if (q.get('item_image')) SETTINGS.itemImage = decodeURIComponent(q.get('item_image'));
-if (q.get('item_title')) SETTINGS.itemTitle = decodeURIComponent(q.get('item_title'));
-
-/* =============================================================================
-   LOGO AND BRANDING SETUP
-   ============================================================================= */
-
-/**
- * Initialize and setup company logo with fallback options
- */
-(function() {
-    const el = document.getElementById('logo');
-    if (!el) return;
-    
-    const cands = [];
-    if (SETTINGS.logoUrl) cands.push(SETTINGS.logoUrl);
-    // cands.push('logo0730w-c_cmyk-06.svg', 'logo0730w-c_cmyk-04 (1).svg', 'logo0730w-c_cmyk-03.svg');
-    cands.push('logo0730w-c_cmyk-06.svg');
-    
-    function tryNext() {
-        if (!cands.length) {
-            el.style.display = 'none';
-            return;
-        }
-        const url = cands.shift();
-        const img = new Image();
-        img.onload = () => {
-            el.src = url;
-            el.alt = 'TENKI-JAPAN';
-            el.style.display = 'inline-block';
-        };
-        img.onerror = tryNext;
-        img.src = url;
-    }
-    tryNext();
-})();
-
-/**
- * Setup sample slide image
- */
-(function() {
-    const el = document.getElementById('sampleSlide');
-    if (SETTINGS.sampleSlideUrl) {
-        el.src = SETTINGS.sampleSlideUrl;
-    } else if (SETTINGS.itemImage) {
-        el.src = SETTINGS.itemImage;
+// Test the parsed parameters and build SETTINGS accordingly
+(async () => {
+    const test = await testParams(shop_id_url_test, hash_test);
+    if (test) {
+        shop_id_url = shop_id_url_test;
+        hash = hash_test;
+        console.log('Using parsed parameters:', shop_id_url, hash);
     } else {
-        el.style.display = 'none';
+        console.log('Using default parameters:', shop_id_url, hash);
     }
-})();
 
-/**
- * Setup PDF download links
- */
-if (SETTINGS.samplePdfUrl) {
-    document.getElementById('samplePdfBtn').href = SETTINGS.samplePdfUrl;
-    document.getElementById('samplePdfLink').href = SETTINGS.samplePdfUrl;
-} else {
-    document.getElementById('samplePdfBtn').style.display = 'none';
-    document.getElementById('samplePdfLink').style.display = 'none';
-}
-
-/**
- * Setup shop name display
- */
-if (SETTINGS.shopName) document.getElementById('shopNameTarget').textContent = SETTINGS.shopName;
-
-/**
- * Shop logo/name setup from explicit URL or shop_id_url pattern
- */
-(function() {
-    const img = document.getElementById('shopBrand');
-    const setLogo = (id) => {
-        if (!id || !img) return;
-        const shop = String(id).replace(/^\//, '');
-        const horiz = `https://thumbnail.image.rakuten.co.jp/@0_mall/${shop}/logo/logo2.jpg`;
-        const square = `https://thumbnail.image.rakuten.co.jp/@0_mall/${shop}/logo/logo1.jpg`;
-        img.src = horiz;
-        img.dataset.squareLogo = square;
-        img.alt = shop;
-        img.style.display = 'inline-block';
-        const nm = document.getElementById('shopNameTarget');
-        if (nm && !SETTINGS.shopName) nm.textContent = shop;
+    // Now build SETTINGS with the correct values
+    window.SETTINGS = {
+        dataUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.json`,
+        csvKeywordsUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.csv`,
+        csvItemsUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}-items.csv`,
+        sampleSlideUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.jpg`,
+        samplePdfUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.pdf`,
+        shopIdUrl: shop_id_url,
+        itemIdUrl: '',
+        itemImage: '',
+        itemTitle: '',
+        slides: 20,
+        kwCount: 238,
+        rppCount: 0,
+        // updatedAt: '2025-08-06 06:14',
+        topKeywords: [],
+        opportunities: [],
+        aiActions: []
     };
-    
-    if (SETTINGS.shopLogo) {
-        img.src = SETTINGS.shopLogo;
-        img.style.display = 'inline-block';
-    } else if (SETTINGS.shopIdUrl) {
-        setLogo(SETTINGS.shopIdUrl);
-    }
+
+    // Continue with initialization that depends on SETTINGS
+    initializeAfterSettings();
 })();
+
+// Function to run after SETTINGS is ready
+function initializeAfterSettings() {
+    // Parse URL parameters for configuration
+    const q = new URLSearchParams(location.search);
+    const qpLang = q.get('lang');
+    let langState = (qpLang === 'en' ? 'en' : (qpLang === 'ja' ? 'ja' : (localStorage.getItem('lang') || 'ja')));
+
+    // Demo gating - controls whether content is locked/blurred
+    window.LOCKED = true;
+    if (q.get('unlock') === '1') window.LOCKED = false;
+
+    // Override settings from URL parameters
+    if (q.get('shop')) SETTINGS.shopName = decodeURIComponent(q.get('shop'));
+    if (q.get('shop_logo')) SETTINGS.shopLogo = decodeURIComponent(q.get('shop_logo'));
+    if (q.get('logo')) SETTINGS.logoUrl = decodeURIComponent(q.get('logo'));
+    if (q.get('slide')) SETTINGS.sampleSlideUrl = decodeURIComponent(q.get('slide'));
+    if (q.get('pdf')) SETTINGS.samplePdfUrl = decodeURIComponent(q.get('pdf'));
+    if (q.get('data')) SETTINGS.dataUrl = decodeURIComponent(q.get('data'));
+    if (q.get('csv1')) SETTINGS.csvKeywordsUrl = decodeURIComponent(q.get('csv1'));
+    if (q.get('csv2')) SETTINGS.csvItemsUrl = decodeURIComponent(q.get('csv2'));
+    if (q.get('shop_id')) SETTINGS.shopIdUrl = decodeURIComponent(q.get('shop_id'));
+    if (q.get('item_id')) SETTINGS.itemIdUrl = decodeURIComponent(q.get('item_id'));
+    if (q.get('item_image')) SETTINGS.itemImage = decodeURIComponent(q.get('item_image'));
+    if (q.get('item_title')) SETTINGS.itemTitle = decodeURIComponent(q.get('item_title'));
+
+    /* =============================================================================
+        LOGO AND BRANDING SETUP
+       ============================================================================= */
+
+    /**
+     * Initialize and setup company logo with fallback options
+     */
+    (function() {
+        const el = document.getElementById('logo');
+        if (!el) return;
+
+        const cands = [];
+        if (SETTINGS.logoUrl) cands.push(SETTINGS.logoUrl);
+        // cands.push('logo0730w-c_cmyk-06.svg', 'logo0730w-c_cmyk-04 (1).svg', 'logo0730w-c_cmyk-03.svg');
+        cands.push('logo0730w-c_cmyk-06.svg');
+
+        function tryNext() {
+            if (!cands.length) {
+                el.style.display = 'none';
+                return;
+            }
+            const url = cands.shift();
+            const img = new Image();
+            img.onload = () => {
+                el.src = url;
+                el.alt = 'TENKI-JAPAN';
+                el.style.display = 'inline-block';
+            };
+            img.onerror = tryNext;
+            img.src = url;
+        }
+        tryNext();
+    })();
+
+    /**
+     * Setup sample slide image
+     */
+    (function() {
+        const el = document.getElementById('sampleSlide');
+        if (SETTINGS.sampleSlideUrl) {
+            el.src = SETTINGS.sampleSlideUrl;
+        } else if (SETTINGS.itemImage) {
+            el.src = SETTINGS.itemImage;
+        } else {
+            el.style.display = 'none';
+        }
+    })();
+
+    /**
+     * Setup PDF download links
+     */
+    if (SETTINGS.samplePdfUrl) {
+        document.getElementById('samplePdfBtn').href = SETTINGS.samplePdfUrl;
+        document.getElementById('samplePdfLink').href = SETTINGS.samplePdfUrl;
+    } else {
+        document.getElementById('samplePdfBtn').style.display = 'none';
+        document.getElementById('samplePdfLink').style.display = 'none';
+    }
+
+    /**
+     * Setup shop name display
+     */
+    if (SETTINGS.shopName) document.getElementById('shopNameTarget').textContent = SETTINGS.shopName;
+
+    /**
+     * Shop logo/name setup from explicit URL or shop_id_url pattern
+     */
+    (function() {
+        const img = document.getElementById('shopBrand');
+        const setLogo = (id) => {
+            if (!id || !img) return;
+            const shop = String(id).replace(/^\//, '');
+            const horiz = `https://thumbnail.image.rakuten.co.jp/@0_mall/${shop}/logo/logo2.jpg`;
+            const square = `https://thumbnail.image.rakuten.co.jp/@0_mall/${shop}/logo/logo1.jpg`;
+            img.src = horiz;
+            img.dataset.squareLogo = square;
+            img.alt = shop;
+            img.style.display = 'inline-block';
+            const nm = document.getElementById('shopNameTarget');
+            if (nm && !SETTINGS.shopName) nm.textContent = shop;
+        };
+
+        if (SETTINGS.shopLogo) {
+            img.src = SETTINGS.shopLogo;
+            img.style.display = 'inline-block';
+        } else if (SETTINGS.shopIdUrl) {
+            setLogo(SETTINGS.shopIdUrl);
+        }
+    })();
+
+    // Continue with the rest of initialization...
+
+
 
 
 /* =============================================================================
-   CSV PROCESSING UTILITIES
+    CSV PROCESSING UTILITIES
    ============================================================================= */
 
 /**
@@ -477,7 +518,7 @@ function parseCsv(text) {
 }
 
 /* =============================================================================
-   CSV HEADER MAPPING AND DATA EXTRACTION
+    CSV HEADER MAPPING AND DATA EXTRACTION
    ============================================================================= */
 
 // Japanese header aliases for flexible CSV parsing
@@ -574,7 +615,7 @@ function fmtJST(iso) {
 }
 
 /* =============================================================================
-   DEMO MODE AND CONTENT MASKING
+    DEMO MODE AND CONTENT MASKING
    ============================================================================= */
 
 /**
@@ -607,7 +648,7 @@ function maskKeyword(s) {
 }
 
 /* =============================================================================
-   CONTENT RENDERING FUNCTIONS
+    CONTENT RENDERING FUNCTIONS
    ============================================================================= */
 
 /**
@@ -680,17 +721,17 @@ function renderAiActions(list) {
         const div = document.createElement('div');
         div.className = 'aiItem';
         div.innerHTML = `
-          <h4>${escapeHtml(it.product || (langState === 'ja' ? '商品' : 'Item'))}</h4>
-          <p class="muted" style="margin:0 0 8px">${escapeHtml(it.summary || '')}</p>
-          ${it.titleSuggestion ? `<div class="kcode">${escapeHtml(it.titleSuggestion)}</div>` : ''}
-          ${Array.isArray(it.rppAdditions) && it.rppAdditions.length ? `<div class="chips" style="margin-top:8px">${it.rppAdditions.map(k => `<span class="chip">${escapeHtml(k)}</span>`).join('')}</div>` : ''}
+            <h4>${escapeHtml(it.product || (langState === 'ja' ? '商品' : 'Item'))}</h4>
+            <p class="muted" style="margin:0 0 8px">${escapeHtml(it.summary || '')}</p>
+            ${it.titleSuggestion ? `<div class="kcode">${escapeHtml(it.titleSuggestion)}</div>` : ''}
+            ${Array.isArray(it.rppAdditions) && it.rppAdditions.length ? `<div class="chips" style="margin-top:8px">${it.rppAdditions.map(k => `<span class="chip">${escapeHtml(k)}</span>`).join('')}</div>` : ''}
         `;
         host.appendChild(div);
     });
 }
 
 /* =============================================================================
-   PRODUCT ITEM MANAGEMENT
+    PRODUCT ITEM MANAGEMENT
    ============================================================================= */
 
 let CURRENT_IDX = 0; // Currently selected product index
@@ -719,8 +760,8 @@ function renderItemsList() {
     const items = (SETTINGS.items || []);
     host.innerHTML = items.map((it, idx) => `
         <button class="itemBtn ${idx === CURRENT_IDX ? 'active' : ''}" data-idx="${idx}">
-          <img src="${it.image || ''}" alt="">
-          <div class="title">${escapeHtml(it.title || ((document.documentElement.lang === 'ja' ? '商品' : 'Item') + ' ' + (idx + 1)))}</div>
+            <img src="${it.image || ''}" alt="">
+            <div class="title">${escapeHtml(it.title || ((document.documentElement.lang === 'ja' ? '商品' : 'Item') + ' ' + (idx + 1)))}</div>
         </button>`).join('');
     
     // Add click handlers to product buttons
@@ -823,12 +864,12 @@ function updateActiveSelection() {
 }
 
 /* =============================================================================
-   STATISTICS DISPLAY
+    STATISTICS DISPLAY
    ============================================================================= */
 
 
 /* =============================================================================
-   CSV DATA LOADING AND PROCESSING
+    CSV DATA LOADING AND PROCESSING
    ============================================================================= */
 
 /**
@@ -879,8 +920,10 @@ async function buildFromCsv() {
             const row = {
                 keyword: (pick(rr, H.keyword) || findContains(rr, ['キーワード', 'keyword', 'kw', 'term', '用語', '検索', 'ワード']) || firstTextValue(rr)),
                 rppRank: pick(rr, H.rpp) || findContains(rr, ['RPP', 'rpp']),
+                seoRank: pick(rr, H.org) || findContains(rr, ['自然検索順位', '自然', 'organic', 'seo']),
                 organicRank: pick(rr, H.org) || findContains(rr, ['自然検索順位', '自然', 'organic', 'seo']),
-                checkedAt: pick(rr, H.checked) || findContains(rr, ['計測', '取得', '時刻', 'timestamp', 'date', 'time'])
+                checkedAt: pick(rr, H.checked) || findContains(rr, ['計測', '取得', '時刻', 'timestamp', 'date', 'time']),
+                name: (pick(rr, H.keyword) || findContains(rr, ['キーワード', 'keyword', 'kw', 'term', '用語', '検索', 'ワード']) || firstTextValue(rr))
             };
             rowsAll.push(row);
             if (!byId.has(iid)) byId.set(iid, []);
@@ -933,7 +976,7 @@ async function buildFromCsv() {
 }
 
 /* =============================================================================
-   APPLICATION INITIALIZATION
+    APPLICATION INITIALIZATION
    ============================================================================= */
 
 // Initialize language and basic rendering
@@ -943,6 +986,9 @@ try {
 
 // Set current year in footer
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// Update page title with shop_id_url
+document.title = document.title.replace('[shop_id_url]', shop_id_url);
 
 applyI18n(typeof langState !== 'undefined' ? langState : 'ja');
 buildItemsFromSettings();
@@ -1041,7 +1087,7 @@ if (!window.USER_CLICKED && window.startAutoSelect) window.startAutoSelect();
 })();
 
 /* =============================================================================
-   EVENT HANDLERS AND INTERACTIONS
+    EVENT HANDLERS AND INTERACTIONS
    ============================================================================= */
 
 // Language toggle functionality
@@ -1083,7 +1129,7 @@ if (formElement) {
 }
 
 /* =============================================================================
-   SHOP LOGO CHOOSER
+    SHOP LOGO CHOOSER
    ============================================================================= */
 
 /**
@@ -1128,7 +1174,7 @@ if (formElement) {
 })();
 
 /* =============================================================================
-   AUTO-ADVANCE FUNCTIONALITY
+    AUTO-ADVANCE FUNCTIONALITY
    ============================================================================= */
 
 // Global state for auto-advance
@@ -1248,7 +1294,7 @@ setTimeout(() => {
 
 
 /* =============================================================================
-   FINAL SETUP AND INTEGRATIONS
+    FINAL SETUP AND INTEGRATIONS
    ============================================================================= */
 
 /**
@@ -1304,7 +1350,7 @@ setTimeout(() => {
 })();
 
 /* =============================================================================
-   SHOP CATEGORY AND REPORTS MANAGEMENT
+    SHOP CATEGORY AND REPORTS MANAGEMENT
    ============================================================================= */
 
 let shopsData = null;
@@ -1566,7 +1612,7 @@ if (shop_id_url) {
 }
 
 /* =============================================================================
-   3D KEYWORD CLOUD BACKGROUND (TagCloud.js)
+    3D KEYWORD CLOUD BACKGROUND (TagCloud.js)
    ============================================================================= */
 
 let tagCloudInstance = null;
@@ -1679,37 +1725,255 @@ function clearKeywordCloud() {
 }
 
 /* =============================================================================
-   TYPEWRITER RECOMMENDATION SYSTEM
+    TYPEWRITER RECOMMENDATION SYSTEM
    ============================================================================= */
 
-let typewriterConfig = null;
+// Advanced typewriter configuration with conditional logic
+const typewriterConfig = {
+    SEO_HIGH_MAX_RANK: 5,
+    MAX_LINE_LEN: 34,
+    animation: { typeSpeed: 22, eraseSpeed: 14, holdDuration: 1600, gapDuration: 400 },
+    labels: {
+        thisProduct: "対象商品",
+        joiner: "・",
+        summaryPattern: "{item}｜{total}件のキーワード（RPP {rpp}件）",
+        rppFocusPattern: "{item}｜注目RPP: {kws}",
+        nextTargetsPattern: "{item}｜次点: SEO上位 {kws}",
+        seoHighPattern: "{item}｜SEO上位: {kws}",
+        rppCandidatePattern: "{item}｜RPP候補: {kws}",
+        seoActivePattern: "{item}｜SEO掲載中: {kws}",
+        noKeywords: "キーワードなし",
+        loading: "データ読み込み中...",
+        fallback: "—"
+    }
+};
+
 let typewriterRunning = false;
 let currentProductIndex = 0;
-let currentTemplateIndex = 0;
+let currentLineIndex = 0;
 
 /**
- * Load typewriter configuration from JSON file
+ * Convert value to integer with null fallback
+ */
+function toInt(n) {
+    if (typeof n === "number" && isFinite(n)) return Math.trunc(n);
+    if (typeof n === "string" && n.trim() !== "" && !isNaN(Number(n))) return Math.trunc(Number(n));
+    return null;
+}
+
+/**
+ * Check if keyword has RPP ranking
+ */
+function hasRpp(k) {
+    const r = toInt(k.rppRank);
+    return r !== null && r >= 1;
+}
+
+/**
+ * Check if keyword has SEO ranking
+ */
+function hasSeo(k) {
+    const s = toInt(k.seoRank || k.organicRank);
+    return s !== null && s >= 1;
+}
+
+/**
+ * Sort keywords by RPP rank, then clicks, then name
+ */
+function byRpp(a, b) {
+    const ar = toInt(a.rppRank) ?? Number.POSITIVE_INFINITY;
+    const br = toInt(b.rppRank) ?? Number.POSITIVE_INFINITY;
+    if (ar !== br) return ar - br;
+    const ac = toInt(a.clicks) ?? -1;
+    const bc = toInt(b.clicks) ?? -1;
+    if (ac !== bc) return bc - ac;
+    return (a.keyword || a.name || '').localeCompare(b.keyword || b.name || '', "ja");
+}
+
+/**
+ * Sort keywords by SEO rank, then impressions, then name
+ */
+function bySeo(a, b) {
+    const ar = toInt(a.seoRank || a.organicRank) ?? Number.POSITIVE_INFINITY;
+    const br = toInt(b.seoRank || b.organicRank) ?? Number.POSITIVE_INFINITY;
+    if (ar !== br) return ar - br;
+    const ai = toInt(a.impressions) ?? -1;
+    const bi = toInt(b.impressions) ?? -1;
+    if (ai !== bi) return bi - ai;
+    return (a.keyword || a.name || '').localeCompare(b.keyword || b.name || '', "ja");
+}
+
+/**
+ * Sanitize keywords array
+ */
+function sanitizeKeywords(kws) {
+    return (kws || [])
+        .filter(k => k && typeof (k.keyword || k.name) === "string" && (k.keyword || k.name).trim().length > 0)
+        .map(k => ({ ...k, name: (k.keyword || k.name).trim(), keyword: (k.keyword || k.name).trim() }));
+}
+
+/**
+ * Clamp string to max length with ellipsis
+ */
+function clamp(s, max) {
+    if (s.length <= max) return s;
+    return s.slice(0, max - 3) + "...";
+}
+
+/**
+ * Fill pattern with values
+ */
+function fill(pattern, values) {
+    return pattern
+        .replace("{item}", values.item)
+        .replace("{total}", String(values.total))
+        .replace("{rpp}", String(values.rpp))
+        .replace("{kws}", values.kws);
+}
+
+/**
+ * Render list line with keyword fitting logic
+ */
+function renderListLine(pattern, item, total, rpp, names, cfg) {
+    const joiner = cfg.labels.joiner;
+    const prefix = fill(pattern, { item, total, rpp, kws: "" });
+    if (names.length === 0) {
+        const line = clamp(prefix, cfg.MAX_LINE_LEN);
+        return line ? { line, usedNames: [] } : null;
+    }
+
+    // Greedily drop the last keyword until within limit
+    let used = names.slice();
+    while (used.length > 0) {
+        const kws = used.join(joiner);
+        const full = prefix + kws;
+        if (full.length <= cfg.MAX_LINE_LEN) return { line: full, usedNames: used };
+        used.pop();
+    }
+
+    // If even one keyword overflows, show prefix only, clamped
+    let fallbackLine = clamp(prefix, cfg.MAX_LINE_LEN);
+    // Replace trailing colon with ellipsis if no keywords could fit
+    if (fallbackLine.endsWith(': ')) {
+        fallbackLine = fallbackLine.slice(0, -2) + '...';
+    } else if (fallbackLine.endsWith(':')) {
+        fallbackLine = fallbackLine.slice(0, -1) + '...';
+    }
+    return fallbackLine ? { line: fallbackLine, usedNames: [] } : null;
+}
+
+/**
+ * Render plain line without keywords
+ */
+function renderPlainLine(pattern, item, total, rpp, cfg) {
+    const s = fill(pattern, { item, total, rpp, kws: "" });
+    return clamp(s, cfg.MAX_LINE_LEN);
+}
+
+/**
+ * Pick names with exclusion logic
+ */
+function pickNames(list, limit, exclude) {
+    const out = [];
+    for (const k of list) {
+        if (out.length >= limit) break;
+        if (exclude.has(k.keyword || k.name)) continue;
+        out.push(k.keyword || k.name);
+    }
+    return out;
+}
+
+/**
+ * Build typewriter lines using advanced logic from TypeScript
+ */
+function buildTypewriter(product, cfg) {
+    const config = cfg || typewriterConfig;
+    const item = (product.itemIdUrl || "").trim() || config.labels.thisProduct;
+    const keywords = sanitizeKeywords(product.keywords);
+    if (product.loading) return { lines: [config.labels.loading], animation: config.animation };
+
+    const total = toInt(product.totalKeywordCount) ?? keywords.length;
+    const rppKeywords = keywords.filter(hasRpp).sort(byRpp);
+    const rppCount = rppKeywords.length;
+
+    const seoHigh = keywords
+        .filter(k => !hasRpp(k) && hasSeo(k) && (toInt(k.seoRank || k.organicRank) ?? Number.MAX_SAFE_INTEGER) <= config.SEO_HIGH_MAX_RANK)
+        .sort(bySeo);
+
+    const seoOthers = keywords
+        .filter(k => !hasRpp(k) && hasSeo(k) && (toInt(k.seoRank || k.organicRank) ?? Number.MAX_SAFE_INTEGER) > config.SEO_HIGH_MAX_RANK)
+        .sort(bySeo);
+
+    if (total === 0 || keywords.length === 0) {
+        return { lines: [config.labels.noKeywords], animation: config.animation };
+    }
+
+    const lines = [];
+    const usedNames = new Set();
+
+    // A) Summary
+    lines.push(renderPlainLine(config.labels.summaryPattern, item, total, rppCount, config));
+
+    if (rppCount > 0) {
+        // B1) RPP focus (up to 3)
+        const namesB1 = pickNames(rppKeywords, 3, usedNames);
+        const resB1 = renderListLine(config.labels.rppFocusPattern, item, total, rppCount, namesB1, config);
+        if (resB1) {
+            lines.push(resB1.line);
+            resB1.usedNames.forEach(n => usedNames.add(n));
+        }
+
+        // B2) Next targets if SEO high exists (up to 2)
+        if (seoHigh.length > 0) {
+            const namesB2 = pickNames(seoHigh, 2, usedNames);
+            const resB2 = renderListLine(config.labels.nextTargetsPattern, item, total, rppCount, namesB2, config);
+            if (resB2) {
+                lines.push(resB2.line);
+                resB2.usedNames.forEach(n => usedNames.add(n));
+            }
+        }
+    } else {
+        // C1) SEO high (up to 3)
+        if (seoHigh.length > 0) {
+            const namesC1 = pickNames(seoHigh, 3, usedNames);
+            const resC1 = renderListLine(config.labels.seoHighPattern, item, total, rppCount, namesC1, config);
+            if (resC1) {
+                lines.push(resC1.line);
+                resC1.usedNames.forEach(n => usedNames.add(n));
+            }
+
+            // C2) RPP candidate (first of SEO high)
+            const namesC2 = pickNames(seoHigh, 1, usedNames);
+            const resC2 = renderListLine(config.labels.rppCandidatePattern, item, total, rppCount, namesC2, config);
+            if (resC2) {
+                lines.push(resC2.line);
+                resC2.usedNames.forEach(n => usedNames.add(n));
+            }
+        } else if (seoOthers.length > 0) {
+            // D) SEO active (up to 2)
+            const namesD = pickNames(seoOthers, 2, usedNames);
+            const resD = renderListLine(config.labels.seoActivePattern, item, total, rppCount, namesD, config);
+            if (resD) {
+                lines.push(resD.line);
+                resD.usedNames.forEach(n => usedNames.add(n));
+            }
+        }
+    }
+
+    // Fail-safe
+    const finalLines = lines.filter(s => typeof s === "string" && s.trim().length > 0);
+    if (finalLines.length === 0) finalLines.push(config.labels.fallback);
+
+    // Limit to 3 lines per cycle
+    return { lines: finalLines.slice(0, 3), animation: config.animation };
+}
+
+/**
+ * Load typewriter configuration from JSON file (legacy fallback)
  */
 async function loadTypewriterConfig() {
-    try {
-        const response = await fetch('typewriter-rules.json');
-        if (!response.ok) throw new Error('Failed to load typewriter config');
-        typewriterConfig = await response.json();
-        return typewriterConfig;
-    } catch (error) {
-        // Fallback configuration if JSON fails to load
-        typewriterConfig = {
-            templates: [
-                { pattern: "{title}｜{total}件のキーワード（RPP {rpp}件）" },
-                { pattern: "{title}｜注目RPP: {rppTop3}" },
-                { pattern: "{title}｜RPPで強化: {rppTop2} など" },
-                { pattern: "{title}｜掲載拡大中（RPP {rpp}件）" }
-            ],
-            animation: { typeSpeed: 22, eraseSpeed: 14, holdDuration: 1600, gapDuration: 400 },
-            fallbacks: { noData: "—", noKeywords: "キーワードなし" }
-        };
-        return typewriterConfig;
-    }
+    // Return the built-in advanced config
+    return typewriterConfig;
 }
 
 /**
@@ -1724,7 +1988,7 @@ function cropTitle(title, maxLength = 70) {
 }
 
 /**
- * Transform SETTINGS.items to typewriter format with title cropping
+ * Transform SETTINGS.items to advanced typewriter format
  */
 function buildTypewriterItems() {
     const items = SETTINGS.items || [];
@@ -1732,42 +1996,25 @@ function buildTypewriterItems() {
     
     return items.map(item => {
         const keywords = Array.isArray(item.keywords) ? item.keywords : [];
-        const rppKeywords = keywords
-            .filter(kw => kw && kw.rppRank && Number(kw.rppRank) > 0)
-            .map(kw => kw.keyword)
-            .filter(Boolean);
-            
-        const total = keywords.length;
-        const rpp = rppKeywords.length;
         
         return {
+            itemIdUrl: item.itemIdUrl || cropTitle(item.title) || typewriterConfig.labels.thisProduct,
             title: cropTitle(item.title),
             fullTitle: item.title || '',
-            itemIdUrl: item.itemIdUrl || item.title, // Don't crop itemIdUrl - use full length in recommendations
             image: item.image || '',
-            total: total,
-            rpp: rpp,
-            rppKeywords: rppKeywords
+            keywords: keywords,
+            totalKeywordCount: keywords.length,
+            loading: false
         };
     });
 }
 
 /**
- * Generate recommendation text from template
+ * Generate all recommendation lines for a product using advanced logic
  */
-function generateRecommendationText(item, template) {
-    if (!item || !template) return '';
-    
-    const fallback = typewriterConfig?.fallbacks?.noData || '—';
-    const top2 = (item.rppKeywords || []).slice(0, 2).join('・') || fallback;
-    const top3 = (item.rppKeywords || []).slice(0, 3).join('・') || fallback;
-    
-    return template.pattern
-        .replace('{itemIdUrl}', item.itemIdUrl || fallback)
-        .replace('{total}', item.total ?? fallback)
-        .replace('{rpp}', item.rpp ?? fallback)
-        .replace('{rppTop2}', top2)
-        .replace('{rppTop3}', top3);
+function generateRecommendationLines(product) {
+    const result = buildTypewriter(product, typewriterConfig);
+    return result.lines;
 }
 
 /**
@@ -1838,7 +2085,7 @@ async function erase(element) {
 }
 
 /**
- * Main typewriter animation loop
+ * Main typewriter animation loop with advanced logic
  */
 async function startTypewriterLoop() {
     if (typewriterRunning) return;
@@ -1847,37 +2094,40 @@ async function startTypewriterLoop() {
     const elTypeLine = document.getElementById('typeLine');
     if (!elTypeLine) return;
     
-    // Load config if not already loaded
-    if (!typewriterConfig) {
-        await loadTypewriterConfig();
-    }
-    
     const items = buildTypewriterItems();
-    const templates = typewriterConfig.templates || [];
     
-    if (!items.length || !templates.length) {
+    if (!items.length) {
         typewriterRunning = false;
         return;
     }
     
     while (typewriterRunning) {
         const item = items[currentProductIndex % items.length];
-        const template = templates[currentTemplateIndex % templates.length];
         
         // Update product chip
-        setProductChip(item);
+        setProductChip({
+            title: item.title,
+            fullTitle: item.fullTitle,
+            image: item.image,
+            total: item.totalKeywordCount,
+            rpp: item.keywords ? item.keywords.filter(hasRpp).length : 0
+        });
         
-        // Generate and type recommendation text
-        const recommendationText = generateRecommendationText(item, template);
-        await typewrite(elTypeLine, recommendationText);
-        await wait(typewriterConfig.animation.holdDuration);
+        // Generate all lines for this product
+        const lines = generateRecommendationLines(item);
         
-        // Erase and move to next
-        await erase(elTypeLine);
-        await wait(typewriterConfig.animation.gapDuration);
+        // Cycle through all generated lines for this product
+        for (const line of lines) {
+            if (!typewriterRunning) break;
+            
+            await typewrite(elTypeLine, line);
+            await wait(typewriterConfig.animation.holdDuration);
+            
+            await erase(elTypeLine);
+            await wait(typewriterConfig.animation.gapDuration);
+        }
         
         currentProductIndex++;
-        currentTemplateIndex++;
     }
 }
 
@@ -1907,7 +2157,7 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 }
 
 /* =============================================================================
-   FAQ SYSTEM
+    FAQ SYSTEM
    ============================================================================= */
 
 let faqData = null;
@@ -1993,4 +2243,4 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
     initFAQ();
 } else {
     document.addEventListener('DOMContentLoaded', initFAQ);
-}
+}}

@@ -99,13 +99,6 @@
       "shop_id": 243484
     },
     {
-      "genre": "ファッション",
-      "secondary_genre": "べビーファッション",
-      "shop": "ponopono",
-      "hash": "12tt5tu-11p9mgc-8kxbpw",
-      "shop_id": 345403
-    },
-    {
       "genre": "美容・健康",
       "secondary_genre": "ダイエット・健康",
       "shop": "shimin2",
@@ -258,20 +251,6 @@
       "shop": "sonoshokuan",
       "hash": "129bzc9-8uwxev-8ku67x",
       "shop_id": 400213
-    },
-    {
-      "genre": "食品",
-      "secondary_genre": "食品",
-      "shop": "kumamoto-food",
-      "hash": "129x3xv-115af2e-16qbvn1",
-      "shop_id": 245288
-    },
-    {
-      "genre": "食品",
-      "secondary_genre": "食品",
-      "shop": "chashoan",
-      "hash": "13xuq3p-7gsly2-6wwk23",
-      "shop_id": 226715
     },
     {
       "genre": "美容・健康",

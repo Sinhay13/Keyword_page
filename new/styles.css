@@ -761,7 +761,7 @@ footer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 12px;
-    min-height: 450px; /* Fixed minimum height to prevent jumping */
+    min-height: 350px; /* Fixed minimum height to prevent jumping */
     align-content: start; /* Align cards to top when fewer items */
 }
 
@@ -1125,8 +1125,9 @@ header, main, footer {
     border-right: 2px solid #d1d5db;
     color: var(--ink);
     width: 100%; /* Fixed width container */
-    display: flex;
-    align-items: center; /* Center text vertically */
+    display: block; /* Use block to fill full width */
+    box-sizing: border-box; /* Include padding in width */
+    padding-right: 8px; /* Space before cursor */
 }
 
 .typeLine.done {
@@ -1135,6 +1136,12 @@ header, main, footer {
 
 /* Mobile responsive */
 @media (max-width: 768px) {
+    .heroTicker {
+        width: 100%; /* Full width on mobile instead of fixed 600px */
+        max-width: 100%;
+        min-width: auto;
+    }
+    
     .heroTickImg {
         width: 36px;
         height: 36px;
@@ -1145,9 +1152,11 @@ header, main, footer {
     }
     
     .statsCard {
+        width: 100%; /* Full width on mobile instead of fixed 600px */
+        max-width: 100%;
+        min-width: auto;
         height: 50px; /* Fixed height for single line on mobile */
         min-height: 50px;
-        max-width: 100%; /* Prevent expansion on mobile */
     }
     
     .typeLine {
