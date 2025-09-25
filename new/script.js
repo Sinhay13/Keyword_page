@@ -1,3 +1,5 @@
+
+
 /**
  * TENKI-JAPAN Keyword Optimization Report
  * Main application JavaScript for interactive keyword analysis dashboard
@@ -207,10 +209,10 @@ const testParams = async (shop, hash) => {
 // Default application settings - using zhong sample data.  
 
 // Default fallback values
-let shop_id_url = 'z-craft';
-let hash = '5sy5a7-13xuq3p-15bsqkk';
-let shop_id_url_test;
-let hash_test;
+let shop_id_url_default = 'z-craft';
+let hash_default = '5sy5a7-13xuq3p-15bsqkk';
+let shop_id_url;
+let hash; 
 
 // Parse URL parameter in format: /?shopname_hash
 const urlParams = new URLSearchParams(window.location.search);
@@ -220,26 +222,24 @@ if (fullParam && fullParam.includes('_')) {
     // Split by the last underscore to separate shop_id from hash
     const parts = fullParam.split('_');
     if (parts.length >= 2) {
-        shop_id_url_test = parts[0];
-        hash_test = parts.slice(1).join('_'); // Join remaining parts in case hash contains underscores
+        shop_id_url = parts[0];
+        hash = parts.slice(1).join('_'); // Join remaining parts in case hash contains underscores
+        const ok = await testParams(shop_id_url, hash);
+        if (!ok) {
+            shop_id_url = shop_id_url_default;
+            hash = hash_default;
+        }
     }
 } else {
     // Fallback to individual parameters for backward compatibility
-    shop_id_url_test = urlParams.get('shop_id_url') || shop_id_url;
-    hash_test = urlParams.get('hash') || hash;
-}
-
-// Test the parsed parameters and build SETTINGS accordingly
-(async () => {
-    const test = await testParams(shop_id_url_test, hash_test);
-    if (test) {
-        shop_id_url = shop_id_url_test;
-        hash = hash_test;
-        console.log('Using parsed parameters:', shop_id_url, hash);
-    } else {
-        console.log('Using default parameters:', shop_id_url, hash);
+    shop_id_url = urlParams.get('shop_id_url') || shop_id_url_default;
+    hash = urlParams.get('hash') || hash_default;
+    const ok = await testParams(shop_id_url, hash);
+    if (!ok) {
+        shop_id_url = shop_id_url_default;
+        hash = hash_default;
     }
-})
+}
 
 const SETTINGS = {
     dataUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.json`,
@@ -264,6 +264,12 @@ const SETTINGS = {
 const q = new URLSearchParams(location.search);
 const qpLang = q.get('lang');
 let langState = (qpLang === 'en' ? 'en' : (qpLang === 'ja' ? 'ja' : (localStorage.getItem('lang') || 'ja')));
+
+window.SETTINGS = SETTINGS;
+window.langState = langState;
+window.I18N = I18N;
+window.selectCategory = selectCategory;
+window.startCategoryAutoAdvance = startCategoryAutoAdvance;
 
 // Demo gating - controls whether content is locked/blurred
 window.LOCKED = true;
@@ -1552,9 +1558,13 @@ function startCategoryAutoAdvance(categories) {
 }
 
 // Initialize shop categories when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    initializeShopCategories();
-});
+const bootShops = () => { initializeShopCategories(); };
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bootShops);
+} else {
+    bootShops(); // DOM is already ready
+}
 
 // Auto-fill HubSpot form by intercepting iframe creation (single load)
 if (shop_id_url) {
