@@ -4,7 +4,7 @@
  */
 
 /* =============================================================================
-    INTERNATIONALIZATION (I18N) CONFIGURATION
+   INTERNATIONALIZATION (I18N) CONFIGURATION
    ============================================================================= */
 
 // Translation dictionary for Japanese and English content
@@ -184,7 +184,7 @@ function applyI18n(lang) {
 }
 
 /* =============================================================================
-    APPLICATION SETTINGS AND CONFIGURATION
+   APPLICATION SETTINGS AND CONFIGURATION
    ============================================================================= */
 
 // function to test if parameters are correct or not
@@ -207,8 +207,8 @@ const testParams = async (shop, hash) => {
 // Default application settings - using zhong sample data.  
 
 // Default fallback values
-let shop_id_url = 'kakiemon';
-let hash = '11fd69c-147r6ap-1337mx7';
+let shop_id_url = 'z-craft';
+let hash = '5sy5a7-13xuq3p-15bsqkk';
 let shop_id_url_test;
 let hash_test;
 
@@ -239,153 +239,143 @@ if (fullParam && fullParam.includes('_')) {
     } else {
         console.log('Using default parameters:', shop_id_url, hash);
     }
+})
 
-    // Now build SETTINGS with the correct values
-    window.SETTINGS = {
-        dataUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.json`,
-        csvKeywordsUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.csv`,
-        csvItemsUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}-items.csv`,
-        sampleSlideUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.jpg`,
-        samplePdfUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.pdf`,
-        shopIdUrl: shop_id_url,
-        itemIdUrl: '',
-        itemImage: '',
-        itemTitle: '',
-        slides: 20,
-        kwCount: 238,
-        rppCount: 0,
-        // updatedAt: '2025-08-06 06:14',
-        topKeywords: [],
-        opportunities: [],
-        aiActions: []
-    };
+const SETTINGS = {
+    dataUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.json`,
+    csvKeywordsUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.csv`,
+    csvItemsUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}-items.csv`,
+    sampleSlideUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.jpg`,
+    samplePdfUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.pdf`,
+    shopIdUrl: shop_id_url,
+    itemIdUrl: '',
+    itemImage: '',
+    itemTitle: '',
+    slides: 20,
+    kwCount: 238,
+    rppCount: 0,
+    // updatedAt: '2025-08-06 06:14',
+    topKeywords: [],
+    opportunities: [],
+    aiActions: []
+};
 
-    // Continue with initialization that depends on SETTINGS
-    initializeAfterSettings();
+// Parse URL parameters for configuration
+const q = new URLSearchParams(location.search);
+const qpLang = q.get('lang');
+let langState = (qpLang === 'en' ? 'en' : (qpLang === 'ja' ? 'ja' : (localStorage.getItem('lang') || 'ja')));
+
+// Demo gating - controls whether content is locked/blurred
+window.LOCKED = true;
+if (q.get('unlock') === '1') window.LOCKED = false;
+
+// Override settings from URL parameters
+if (q.get('shop')) SETTINGS.shopName = decodeURIComponent(q.get('shop'));
+if (q.get('shop_logo')) SETTINGS.shopLogo = decodeURIComponent(q.get('shop_logo'));
+if (q.get('logo')) SETTINGS.logoUrl = decodeURIComponent(q.get('logo'));
+if (q.get('slide')) SETTINGS.sampleSlideUrl = decodeURIComponent(q.get('slide'));
+if (q.get('pdf')) SETTINGS.samplePdfUrl = decodeURIComponent(q.get('pdf'));
+if (q.get('data')) SETTINGS.dataUrl = decodeURIComponent(q.get('data'));
+if (q.get('csv1')) SETTINGS.csvKeywordsUrl = decodeURIComponent(q.get('csv1'));
+if (q.get('csv2')) SETTINGS.csvItemsUrl = decodeURIComponent(q.get('csv2'));
+if (q.get('shop_id')) SETTINGS.shopIdUrl = decodeURIComponent(q.get('shop_id'));
+if (q.get('item_id')) SETTINGS.itemIdUrl = decodeURIComponent(q.get('item_id'));
+if (q.get('item_image')) SETTINGS.itemImage = decodeURIComponent(q.get('item_image'));
+if (q.get('item_title')) SETTINGS.itemTitle = decodeURIComponent(q.get('item_title'));
+
+/* =============================================================================
+   LOGO AND BRANDING SETUP
+   ============================================================================= */
+
+/**
+ * Initialize and setup company logo with fallback options
+ */
+(function() {
+    const el = document.getElementById('logo');
+    if (!el) return;
+    
+    const cands = [];
+    if (SETTINGS.logoUrl) cands.push(SETTINGS.logoUrl);
+    // cands.push('logo0730w-c_cmyk-06.svg', 'logo0730w-c_cmyk-04 (1).svg', 'logo0730w-c_cmyk-03.svg');
+    cands.push('logo0730w-c_cmyk-06.svg');
+    
+    function tryNext() {
+        if (!cands.length) {
+            el.style.display = 'none';
+            return;
+        }
+        const url = cands.shift();
+        const img = new Image();
+        img.onload = () => {
+            el.src = url;
+            el.alt = 'TENKI-JAPAN';
+            el.style.display = 'inline-block';
+        };
+        img.onerror = tryNext;
+        img.src = url;
+    }
+    tryNext();
 })();
 
-// Function to run after SETTINGS is ready
-function initializeAfterSettings() {
-    // Parse URL parameters for configuration
-    const q = new URLSearchParams(location.search);
-    const qpLang = q.get('lang');
-    let langState = (qpLang === 'en' ? 'en' : (qpLang === 'ja' ? 'ja' : (localStorage.getItem('lang') || 'ja')));
-
-    // Demo gating - controls whether content is locked/blurred
-    window.LOCKED = true;
-    if (q.get('unlock') === '1') window.LOCKED = false;
-
-    // Override settings from URL parameters
-    if (q.get('shop')) SETTINGS.shopName = decodeURIComponent(q.get('shop'));
-    if (q.get('shop_logo')) SETTINGS.shopLogo = decodeURIComponent(q.get('shop_logo'));
-    if (q.get('logo')) SETTINGS.logoUrl = decodeURIComponent(q.get('logo'));
-    if (q.get('slide')) SETTINGS.sampleSlideUrl = decodeURIComponent(q.get('slide'));
-    if (q.get('pdf')) SETTINGS.samplePdfUrl = decodeURIComponent(q.get('pdf'));
-    if (q.get('data')) SETTINGS.dataUrl = decodeURIComponent(q.get('data'));
-    if (q.get('csv1')) SETTINGS.csvKeywordsUrl = decodeURIComponent(q.get('csv1'));
-    if (q.get('csv2')) SETTINGS.csvItemsUrl = decodeURIComponent(q.get('csv2'));
-    if (q.get('shop_id')) SETTINGS.shopIdUrl = decodeURIComponent(q.get('shop_id'));
-    if (q.get('item_id')) SETTINGS.itemIdUrl = decodeURIComponent(q.get('item_id'));
-    if (q.get('item_image')) SETTINGS.itemImage = decodeURIComponent(q.get('item_image'));
-    if (q.get('item_title')) SETTINGS.itemTitle = decodeURIComponent(q.get('item_title'));
-
-    /* =============================================================================
-        LOGO AND BRANDING SETUP
-       ============================================================================= */
-
-    /**
-     * Initialize and setup company logo with fallback options
-     */
-    (function() {
-        const el = document.getElementById('logo');
-        if (!el) return;
-
-        const cands = [];
-        if (SETTINGS.logoUrl) cands.push(SETTINGS.logoUrl);
-        // cands.push('logo0730w-c_cmyk-06.svg', 'logo0730w-c_cmyk-04 (1).svg', 'logo0730w-c_cmyk-03.svg');
-        cands.push('logo0730w-c_cmyk-06.svg');
-
-        function tryNext() {
-            if (!cands.length) {
-                el.style.display = 'none';
-                return;
-            }
-            const url = cands.shift();
-            const img = new Image();
-            img.onload = () => {
-                el.src = url;
-                el.alt = 'TENKI-JAPAN';
-                el.style.display = 'inline-block';
-            };
-            img.onerror = tryNext;
-            img.src = url;
-        }
-        tryNext();
-    })();
-
-    /**
-     * Setup sample slide image
-     */
-    (function() {
-        const el = document.getElementById('sampleSlide');
-        if (SETTINGS.sampleSlideUrl) {
-            el.src = SETTINGS.sampleSlideUrl;
-        } else if (SETTINGS.itemImage) {
-            el.src = SETTINGS.itemImage;
-        } else {
-            el.style.display = 'none';
-        }
-    })();
-
-    /**
-     * Setup PDF download links
-     */
-    if (SETTINGS.samplePdfUrl) {
-        document.getElementById('samplePdfBtn').href = SETTINGS.samplePdfUrl;
-        document.getElementById('samplePdfLink').href = SETTINGS.samplePdfUrl;
+/**
+ * Setup sample slide image
+ */
+(function() {
+    const el = document.getElementById('sampleSlide');
+    if (SETTINGS.sampleSlideUrl) {
+        el.src = SETTINGS.sampleSlideUrl;
+    } else if (SETTINGS.itemImage) {
+        el.src = SETTINGS.itemImage;
     } else {
-        document.getElementById('samplePdfBtn').style.display = 'none';
-        document.getElementById('samplePdfLink').style.display = 'none';
+        el.style.display = 'none';
     }
+})();
 
-    /**
-     * Setup shop name display
-     */
-    if (SETTINGS.shopName) document.getElementById('shopNameTarget').textContent = SETTINGS.shopName;
+/**
+ * Setup PDF download links
+ */
+if (SETTINGS.samplePdfUrl) {
+    document.getElementById('samplePdfBtn').href = SETTINGS.samplePdfUrl;
+    document.getElementById('samplePdfLink').href = SETTINGS.samplePdfUrl;
+} else {
+    document.getElementById('samplePdfBtn').style.display = 'none';
+    document.getElementById('samplePdfLink').style.display = 'none';
+}
 
-    /**
-     * Shop logo/name setup from explicit URL or shop_id_url pattern
-     */
-    (function() {
-        const img = document.getElementById('shopBrand');
-        const setLogo = (id) => {
-            if (!id || !img) return;
-            const shop = String(id).replace(/^\//, '');
-            const horiz = `https://thumbnail.image.rakuten.co.jp/@0_mall/${shop}/logo/logo2.jpg`;
-            const square = `https://thumbnail.image.rakuten.co.jp/@0_mall/${shop}/logo/logo1.jpg`;
-            img.src = horiz;
-            img.dataset.squareLogo = square;
-            img.alt = shop;
-            img.style.display = 'inline-block';
-            const nm = document.getElementById('shopNameTarget');
-            if (nm && !SETTINGS.shopName) nm.textContent = shop;
-        };
+/**
+ * Setup shop name display
+ */
+if (SETTINGS.shopName) document.getElementById('shopNameTarget').textContent = SETTINGS.shopName;
 
-        if (SETTINGS.shopLogo) {
-            img.src = SETTINGS.shopLogo;
-            img.style.display = 'inline-block';
-        } else if (SETTINGS.shopIdUrl) {
-            setLogo(SETTINGS.shopIdUrl);
-        }
-    })();
-
-    // Continue with the rest of initialization...
-
-
+/**
+ * Shop logo/name setup from explicit URL or shop_id_url pattern
+ */
+(function() {
+    const img = document.getElementById('shopBrand');
+    const setLogo = (id) => {
+        if (!id || !img) return;
+        const shop = String(id).replace(/^\//, '');
+        const horiz = `https://thumbnail.image.rakuten.co.jp/@0_mall/${shop}/logo/logo2.jpg`;
+        const square = `https://thumbnail.image.rakuten.co.jp/@0_mall/${shop}/logo/logo1.jpg`;
+        img.src = horiz;
+        img.dataset.squareLogo = square;
+        img.alt = shop;
+        img.style.display = 'inline-block';
+        const nm = document.getElementById('shopNameTarget');
+        if (nm && !SETTINGS.shopName) nm.textContent = shop;
+    };
+    
+    if (SETTINGS.shopLogo) {
+        img.src = SETTINGS.shopLogo;
+        img.style.display = 'inline-block';
+    } else if (SETTINGS.shopIdUrl) {
+        setLogo(SETTINGS.shopIdUrl);
+    }
+})();
 
 
 /* =============================================================================
-    CSV PROCESSING UTILITIES
+   CSV PROCESSING UTILITIES
    ============================================================================= */
 
 /**
@@ -518,7 +508,7 @@ function parseCsv(text) {
 }
 
 /* =============================================================================
-    CSV HEADER MAPPING AND DATA EXTRACTION
+   CSV HEADER MAPPING AND DATA EXTRACTION
    ============================================================================= */
 
 // Japanese header aliases for flexible CSV parsing
@@ -615,7 +605,7 @@ function fmtJST(iso) {
 }
 
 /* =============================================================================
-    DEMO MODE AND CONTENT MASKING
+   DEMO MODE AND CONTENT MASKING
    ============================================================================= */
 
 /**
@@ -648,7 +638,7 @@ function maskKeyword(s) {
 }
 
 /* =============================================================================
-    CONTENT RENDERING FUNCTIONS
+   CONTENT RENDERING FUNCTIONS
    ============================================================================= */
 
 /**
@@ -721,17 +711,17 @@ function renderAiActions(list) {
         const div = document.createElement('div');
         div.className = 'aiItem';
         div.innerHTML = `
-            <h4>${escapeHtml(it.product || (langState === 'ja' ? '商品' : 'Item'))}</h4>
-            <p class="muted" style="margin:0 0 8px">${escapeHtml(it.summary || '')}</p>
-            ${it.titleSuggestion ? `<div class="kcode">${escapeHtml(it.titleSuggestion)}</div>` : ''}
-            ${Array.isArray(it.rppAdditions) && it.rppAdditions.length ? `<div class="chips" style="margin-top:8px">${it.rppAdditions.map(k => `<span class="chip">${escapeHtml(k)}</span>`).join('')}</div>` : ''}
+          <h4>${escapeHtml(it.product || (langState === 'ja' ? '商品' : 'Item'))}</h4>
+          <p class="muted" style="margin:0 0 8px">${escapeHtml(it.summary || '')}</p>
+          ${it.titleSuggestion ? `<div class="kcode">${escapeHtml(it.titleSuggestion)}</div>` : ''}
+          ${Array.isArray(it.rppAdditions) && it.rppAdditions.length ? `<div class="chips" style="margin-top:8px">${it.rppAdditions.map(k => `<span class="chip">${escapeHtml(k)}</span>`).join('')}</div>` : ''}
         `;
         host.appendChild(div);
     });
 }
 
 /* =============================================================================
-    PRODUCT ITEM MANAGEMENT
+   PRODUCT ITEM MANAGEMENT
    ============================================================================= */
 
 let CURRENT_IDX = 0; // Currently selected product index
@@ -760,8 +750,8 @@ function renderItemsList() {
     const items = (SETTINGS.items || []);
     host.innerHTML = items.map((it, idx) => `
         <button class="itemBtn ${idx === CURRENT_IDX ? 'active' : ''}" data-idx="${idx}">
-            <img src="${it.image || ''}" alt="">
-            <div class="title">${escapeHtml(it.title || ((document.documentElement.lang === 'ja' ? '商品' : 'Item') + ' ' + (idx + 1)))}</div>
+          <img src="${it.image || ''}" alt="">
+          <div class="title">${escapeHtml(it.title || ((document.documentElement.lang === 'ja' ? '商品' : 'Item') + ' ' + (idx + 1)))}</div>
         </button>`).join('');
     
     // Add click handlers to product buttons
@@ -864,12 +854,12 @@ function updateActiveSelection() {
 }
 
 /* =============================================================================
-    STATISTICS DISPLAY
+   STATISTICS DISPLAY
    ============================================================================= */
 
 
 /* =============================================================================
-    CSV DATA LOADING AND PROCESSING
+   CSV DATA LOADING AND PROCESSING
    ============================================================================= */
 
 /**
@@ -976,7 +966,7 @@ async function buildFromCsv() {
 }
 
 /* =============================================================================
-    APPLICATION INITIALIZATION
+   APPLICATION INITIALIZATION
    ============================================================================= */
 
 // Initialize language and basic rendering
@@ -1087,7 +1077,7 @@ if (!window.USER_CLICKED && window.startAutoSelect) window.startAutoSelect();
 })();
 
 /* =============================================================================
-    EVENT HANDLERS AND INTERACTIONS
+   EVENT HANDLERS AND INTERACTIONS
    ============================================================================= */
 
 // Language toggle functionality
@@ -1129,7 +1119,7 @@ if (formElement) {
 }
 
 /* =============================================================================
-    SHOP LOGO CHOOSER
+   SHOP LOGO CHOOSER
    ============================================================================= */
 
 /**
@@ -1174,7 +1164,7 @@ if (formElement) {
 })();
 
 /* =============================================================================
-    AUTO-ADVANCE FUNCTIONALITY
+   AUTO-ADVANCE FUNCTIONALITY
    ============================================================================= */
 
 // Global state for auto-advance
@@ -1294,7 +1284,7 @@ setTimeout(() => {
 
 
 /* =============================================================================
-    FINAL SETUP AND INTEGRATIONS
+   FINAL SETUP AND INTEGRATIONS
    ============================================================================= */
 
 /**
@@ -1350,7 +1340,7 @@ setTimeout(() => {
 })();
 
 /* =============================================================================
-    SHOP CATEGORY AND REPORTS MANAGEMENT
+   SHOP CATEGORY AND REPORTS MANAGEMENT
    ============================================================================= */
 
 let shopsData = null;
@@ -1612,7 +1602,7 @@ if (shop_id_url) {
 }
 
 /* =============================================================================
-    3D KEYWORD CLOUD BACKGROUND (TagCloud.js)
+   3D KEYWORD CLOUD BACKGROUND (TagCloud.js)
    ============================================================================= */
 
 let tagCloudInstance = null;
@@ -1725,7 +1715,7 @@ function clearKeywordCloud() {
 }
 
 /* =============================================================================
-    TYPEWRITER RECOMMENDATION SYSTEM
+   TYPEWRITER RECOMMENDATION SYSTEM
    ============================================================================= */
 
 // Advanced typewriter configuration with conditional logic
@@ -2157,7 +2147,7 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 }
 
 /* =============================================================================
-    FAQ SYSTEM
+   FAQ SYSTEM
    ============================================================================= */
 
 let faqData = null;
@@ -2243,4 +2233,4 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
     initFAQ();
 } else {
     document.addEventListener('DOMContentLoaded', initFAQ);
-}}
+}
