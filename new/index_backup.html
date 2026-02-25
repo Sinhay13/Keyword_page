@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6QQ2NGEP35"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-6QQ2NGEP35');
+    </script>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>[shop_id_url] - キーワード最適化レポート | TENKI-JAPAN</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sticky CTA at bottom of page -->
+    <div id="stickyCta">
+        <div class="wrap">
+            <div id="stickyText">無料サンプルとAIプランを48時間で送付</div>
+            <a class="btn" href="#hs-form-host">無料レポートを申し込む</a>
+        </div>
+    </div>
+
+    <!-- Header with navigation -->
+    <header>
+        <div class="container nav">
+            <div class="brand">
+                <img alt="TENKI-JAPAN" id="logo"/>
+                <strong>TENKI-JAPAN</strong>
+            </div>
+            <nav class="navlinks">
+                <a class="btn ghost" href="#how" id="navProcess">サービスの流れ</a>
+                <a class="btn ghost" href="#sample" id="navSample">貴店デモ</a>
+                <a class="btn primary" href="#request" id="ctaTop">無料レポートを申し込む</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main>
+        <!-- Hero section with main value proposition -->
+        <section class="hero">
+            <div class="container grid grid-2">
+                <div>
+                    <div class="shopRow">
+                        <span class="badge" id="preparedLabel">貴店専用</span>
+                        <img alt="Shop logo" id="shopBrand" style="display:none"/>
+                        <strong id="shopNameTarget">貴社ショップ</strong>
+                    </div>
+                    <div class="promo" id="promoText">NEW｜期間限定で無料AI分析提供</div>
+                    <h1 id="heroTitle">楽天キーワード最適化レポート</h1>
+                    <p class="muted"style="margin:6px 0 0">RPPと自然検索がともに改善できる！<br>キーワードごとの検索順位を可視化して、戦略立案。</p>
+                    
+                    <!-- Typewriter recommendation system -->
+                    <div class="heroTicker" id="heroTicker">
+                        <img class="heroTickImg" id="heroTickImg" alt="item" style="display: none;"/>
+                        <div class="heroTickMeta">
+                            <div class="heroTickTitle" id="heroTickTitle"></div>
+                            <div class="heroTickCounts" id="heroTickCounts"></div>
+                        </div>
+                    </div>
+                    <div class="statsCard">
+                        <div class="typeLine" id="typeLine"></div>
+                    </div>
+                    
+                    <div style="display:flex;gap:12px;margin-top:14px;flex-wrap:wrap">
+                        <a class="btn primary" href="#request" id="ctaPrimary">無料レポートを申し込む</a>
+                        <a class="btn" id="samplePdfBtn" rel="noopener" target="_blank">サンプルPDFを見る</a>
+                    </div>
+                    <div class="muted" id="tagsRow" style="display:flex;gap:18px;margin-top:12px;flex-wrap:wrap;font-size:14px">
+                        <span >楽天市場の検索結果をフル活用！</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="p">
+                        <div class="ratio">
+                            <img alt="Report first slide" id="sampleSlide"/>
+                        </div>
+                        <p class="muted" id="slideCaption" style="margin:10px 2px 0">プレビュー画面。完全版では最大20商品分のデータが閲覧できます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits section -->
+        <section style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+            <div class="container grid grid-3" id="benefits">
+                <div class="card">
+                    <div class="p">
+                        <h3 id="b1t" style="margin:0 0 6px">効果的なキーワードを特定</h3>
+                        <p class="muted" id="b1d">RPPまたは自然検索で狙うべきキーワードを特定</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="p">
+                        <h3 id="b2t" style="margin:0 0 6px">市場比較してギャップを把握</h3>
+                        <p class="muted" id="b2d">機会損失とコスト高のキーワードが把握できる</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="p">
+                        <h3 id="b3t" style="margin:0 0 6px">検索マーケティング戦略立案</h3>
+                        <p class="muted" >具体的なSEOキーワード発見及び <br> RPPのキーワード調整の方法の発見</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sample demonstration section -->
+        <section id="sample">
+            <div class="container grid grid-2">
+                <!-- Product selection panel -->
+                <div class="card">
+                    <div class="p">
+                        <h3 id="oppTitle" style="margin:0 0 6px">商品を選択</h3>
+                        <p class="muted" id="oppSub" style="margin:0 0 12px">自然検索は上位、RPPが弱い—まず対処</p>
+                        <div class="itemsList" id="itemsList"></div>
+                        <div class="spot" id="itemHeader" style="display:none"></div>
+                        <div class="bars" id="bars"></div>
+                    </div>
+                </div>
+
+                <!-- Keywords table panel -->
+                <div class="card">
+                    <div class="p">
+                        <h3 id="kwTitle" style="margin:0 0 6px">主要キーワード一部抜粋</h3>
+                        <p class="muted" id="kwSub" style="margin:0 0 8px">RPP順位、自然検索順位、確認時間</p>
+                        <div class="lockNote" id="lockNote" style="display:none"></div>
+                        <div class="tableScroll">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th id="thKeyword">キーワード</th>
+                                        <th id="thRpp">RPP順位</th>
+                                        <th id="thOrg">自然検索順位</th>
+                                        <th id="thChecked">確認時間</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="kwTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI action plan section -->
+        <section id="ai">
+            <div class="container">
+                <div class="actionCard">
+                    <h3 id="aiTitle" style="margin:0 0 8px">AIからのアクションプラン<span class="badge">NEW</span></h3>
+                    <p class="muted" id="aiSub" style="margin:0 0 12px">レポートをもとに、商品ごとにタイトルの修正案とRPP追加案を自動生成します</p>
+                    <div class="grid" id="aiList"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Reports by Category section -->
+        <section id="shops">
+            <div class="container">
+                <div class="actionCard">
+                    <h3 id="shopsTitle" style="margin:0 0 8px">Shop Reports by Category</h3>
+                    <p class="muted" id="shopsSub" style="margin:0 0 12px">Browse available keyword reports organized by industry and subcategory.</p>
+                    
+                    <!-- Category navigation menu -->
+                    <div class="category-menu" id="categoryMenu">
+                        <!-- Categories will be generated here -->
+                    </div>
+                    
+                    <!-- Shop cards container -->
+                    <div class="shop-cards" id="shopCards">
+                        <!-- Shop cards will be generated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process steps section -->
+        <section id="how" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+            <div class="container grid grid-3">
+                <div class="card">
+                    <div class="p">
+                        <div class="muted" style="font-size:12px">Step 1</div>
+                        <h3 id="s1t" style="margin:4px 0">分析</h3>
+                        <p class="muted" id="s1d">RPPと自然順位を評価します。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="p">
+                        <div class="muted" style="font-size:12px">Step 2</div>
+                        <h3 id="s2t" style="margin:4px 0">レポート</h3>
+                        <p class="muted" id="s2d">改善ポイントと実施すべきアクションをまとめたPDFをお届けします。</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="p">
+                        <div class="muted" style="font-size:12px">Step 3</div>
+                        <h3 id="s3t" style="margin:4px 0">AI分析</h3>
+                        <p class="muted" id="s3d">商品名とRPPの改善やアクションプランを提示します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ section -->
+        <section id="faq">
+            <div class="container">
+                <div class="card">
+                    <div class="p">
+                        <h3 id="faqTitle" style="margin:0 0 16px">よくある質問</h3>
+                        <div id="faqList"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Request form section -->
+        <section id="request">
+            <div class="container" style="max-width:760px">
+            </div>
+            <!-- HubSpot form container -->
+            <div class="card hs-form-host" id="hs-form-host" style="max-width:760px;margin:24px auto;">
+                <div class="p">
+                    <div class="hs-form-frame" data-form-id="e1fbc13a-c8a3-468b-ada9-1f5670885b76" data-portal-id="242371689" data-region="na2"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container" style="display:flex;gap:16px;align-items:center;justify-content:space-between;padding:18px 0;font-size:14px;color:var(--muted)">
+            <div>© <span id="year"></span> TENKI-JAPAN</div>
+            <div style="display:flex;gap:16px;align-items:center">
+                <a href="#how" id="footProcess">進め方</a>
+                <a href="#sample" id="footSample">貴店デモ</a>
+                <a id="samplePdfLink" rel="noopener" target="_blank">貴店PDF例</a>
+                <button class="btn pill ghost" id="footLangSwitch" type="button">EN</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- URL Normalization - MUST run first, before HubSpot loads -->
+    <!-- <script>
+        (function() {
+            const fullParam = window.location.search.slice(1);
+            
+            if (fullParam && fullParam.includes('_') && !fullParam.includes('shop_id_url=')) {
+                const parts = fullParam.split('_');
+                if (parts.length >= 2) {
+                    const shop_id_url = parts[0];
+                    const hash = parts.slice(1).join('_');
+                    
+                    const newUrl = `${window.location.pathname}?shop_id_url=${shop_id_url}&hash=${hash}`;
+                    window.history.replaceState({}, document.title, newUrl);
+                    
+                    console.log('URL normalized for HubSpot:', newUrl);
+                }
+            }
+        })();
+    </script> -->
+    
+    <!-- External scripts - Load HubSpot script after delay -->
+    <script>
+        setTimeout(function() {
+            const script = document.createElement('script');
+            script.src = 'https://js-na2.hsforms.net/forms/embed/242371689.js';
+            document.body.appendChild(script);
+            console.log('HubSpot script loaded with URL:', window.location.search);
+        }, 200);
+    </script>
+    <!-- TagCloud.js library for 3D keyword sphere (local version) -->
+    <script src="TagCloud.min.js"></script>
+    <!-- Main application script -->
+    <script type="module" src="script.js"></script>
+    <!-- Start of HubSpot Embed Code -->
+    <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/242371689.js"></script>
+    <!-- End of HubSpot Embed Code -->
+</body>
+</html>
