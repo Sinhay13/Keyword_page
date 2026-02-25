@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test URL Conversion</title>
+</head>
+<body>
+    <h1>Test URL Conversion for HubSpot</h1>
+    <p>Original URL: <span id="original"></span></p>
+    <p>Converted URL: <span id="converted"></span></p>
+    <p>shop_id_url: <span id="shop_id"></span></p>
+    <p>hash: <span id="hash"></span></p>
+    
+    <script>
+        document.getElementById('original').textContent = window.location.href;
+        
+        // Same logic as in script.js
+        const fullParam = window.location.search.slice(1);
+        
+        if (fullParam && fullParam.includes('_') && !fullParam.includes('shop_id_url=')) {
+            const parts = fullParam.split('_');
+            if (parts.length >= 2) {
+                const shop_id_url = parts[0];
+                const hash = parts.slice(1).join('_');
+                
+                const newUrl = `${window.location.pathname}?shop_id_url=${shop_id_url}&hash=${hash}`;
+                window.history.replaceState({}, document.title, newUrl);
+                
+                document.getElementById('converted').textContent = window.location.href;
+                document.getElementById('shop_id').textContent = shop_id_url;
+                document.getElementById('hash').textContent = hash;
+            }
+        } else {
+            document.getElementById('converted').textContent = 'No conversion needed';
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            document.getElementById('shop_id').textContent = urlParams.get('shop_id_url') || 'N/A';
+            document.getElementById('hash').textContent = urlParams.get('hash') || 'N/A';
+        }
+    </script>
+</body>
+</html>

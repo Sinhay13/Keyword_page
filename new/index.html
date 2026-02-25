@@ -243,8 +243,35 @@
         </div>
     </footer>
 
-    <!-- External scripts -->
-    <script defer="True" src="https://js-na2.hsforms.net/forms/embed/242371689.js"></script>
+    <!-- URL Normalization - MUST run first, before HubSpot loads -->
+    <!-- <script>
+        (function() {
+            const fullParam = window.location.search.slice(1);
+            
+            if (fullParam && fullParam.includes('_') && !fullParam.includes('shop_id_url=')) {
+                const parts = fullParam.split('_');
+                if (parts.length >= 2) {
+                    const shop_id_url = parts[0];
+                    const hash = parts.slice(1).join('_');
+                    
+                    const newUrl = `${window.location.pathname}?shop_id_url=${shop_id_url}&hash=${hash}`;
+                    window.history.replaceState({}, document.title, newUrl);
+                    
+                    console.log('URL normalized for HubSpot:', newUrl);
+                }
+            }
+        })();
+    </script> -->
+    
+    <!-- External scripts - Load HubSpot script after delay -->
+    <script>
+        setTimeout(function() {
+            const script = document.createElement('script');
+            script.src = 'https://js-na2.hsforms.net/forms/embed/242371689.js';
+            document.body.appendChild(script);
+            console.log('HubSpot script loaded with URL:', window.location.search);
+        }, 200);
+    </script>
     <!-- TagCloud.js library for 3D keyword sphere (local version) -->
     <script src="TagCloud.min.js"></script>
     <!-- Main application script -->

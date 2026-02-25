@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test URL Parsing Fix</title>
+    <style>
+        body { font-family: monospace; padding: 40px; background: #f5f5f5; }
+        .result { background: white; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .success { color: #4caf50; font-weight: bold; }
+        .error { color: #f44336; font-weight: bold; }
+        code { background: #eee; padding: 2px 6px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test URL Parsing Fix</h1>
+    
+    <div class="result">
+        <h2>Current URL</h2>
+        <code id="currentUrl"></code>
+    </div>
+    
+    <div class="result" id="parseResult"></div>
+    
+    <div class="result">
+        <h2>Quick Tests</h2>
+        <button onclick="location.href='?kindbea_11pur1y-12j8fj9-1659kju'">Test: Combined Format</button>
+        <button onclick="location.href='?shop_id_url=kindbea&hash=11pur1y-12j8fj9-1659kju'">Test: Parameter Format</button>
+    </div>
+    
+    <script>
+        document.getElementById('currentUrl').textContent = window.location.href;
+        
+        // Parse using FIXED logic
+        const fullParam = window.location.search.replace(/^[\?\/]+/, '');
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        let shop_id_url, hash;
+        const shop_id_url_default = 'z-craft';
+        const hash_default = '5sy5a7-13xuq3p-15bsqkk';
+        
+        const isCombinedFormat = fullParam && fullParam.includes('_') && !fullParam.includes('=');
+        
+        if (isCombinedFormat) {
+            const parts = fullParam.split('_');
+            if (parts.length >= 2) {
+                shop_id_url = parts[0];
+                hash = parts.slice(1).join('_');
+            } else {
+                shop_id_url = shop_id_url_default;
+                hash = hash_default;
+            }
+        } else {
+            const paramShopIdUrl = urlParams.get('shop_id_url');
+            const paramShopId = urlParams.get('shop_id');
+            const paramHash = urlParams.get('hash');
+            
+            shop_id_url = paramShopIdUrl || paramShopId || shop_id_url_default;
+            hash = paramHash || hash_default;
+        }
+        
+        const resultDiv = document.getElementById('parseResult');
+        resultDiv.innerHTML = `
+            <h2>Parse Results</h2>
+            <p><strong>Parse Method:</strong> ${isCombinedFormat ? 'Combined Format' : 'Parameter Format'}</p>
+            <p class="success">✅ shop_id_url: <code>${shop_id_url}</code></p>
+            <p class="success">✅ hash: <code>${hash}</code></p>
+            <p><strong>Data URL:</strong><br>
+            <code style="word-break: break-all;">https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.json</code></p>
+        `;
+    </script>
+</body>
+</html>

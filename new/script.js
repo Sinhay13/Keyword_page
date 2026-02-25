@@ -1,5 +1,3 @@
-
-
 /**
  * TENKI-JAPAN Keyword Optimization Report
  * Main application JavaScript for interactive keyword analysis dashboard
@@ -12,44 +10,45 @@
 // Translation dictionary for Japanese and English content
 const I18N = {
     en: {
-        navProcess: 'Service Flow', 
-        navSample: 'Your Shop Demo', 
+        navProcess: 'Process', 
+        navSample: 'Sample', 
         ctaTop: 'Get Your Free Sample',
         preparedLabel: 'Prepared for', 
-        promoText: 'NEW | Free AI analysis available for a limited time',
+        promoText: 'NEW • Free AI analysis for a limited time',
         heroTitle: 'Rakuten Keyword Optimization Report', 
+        heroSubtitle: 'See RPP vs organic coverage and current ranks. Get a concise PDF with next actions.',
         ctaPrimary: 'Get Your Free Sample', 
         samplePdfBtn: 'View Sample PDF',
         tag1: 'Privacy-safe', 
         tag2: 'Actionable', 
         tag3: 'Rakuten-focused',
-        slideCaption: 'Preview screen. In the full version, you can view data for up to 20 products.',
-        b1t: 'Identify effective keywords', 
-        b1d: 'Identify the keywords to target in RPP or organic search',
-        b2t: 'Compare the market and identify gaps', 
-        b2d: 'Identify keywords causing missed opportunities and high costs',
-        b3t: 'Search marketing strategy planning', 
-        b3d: 'Discover specific SEO keywords and methods for adjusting RPP keywords',
+        slideCaption: 'Sample preview. Full PDF includes keyword tables and recommendations.',
+        b1t: 'Identify high-impact keywords', 
+        b1d: 'Spot terms with RPP or organic gaps.',
+        b2t: 'Benchmark and gaps', 
+        b2d: 'See missed opportunities vs. market.',
+        b3t: 'Clear next actions', 
+        b3d: 'Concrete edits to titles and related keywords.',
         oppTitle: 'Choose an item', 
-        oppSub: 'Click a product to view its keywords on the right.',
-        kwTitle: 'Selected main keywords', 
-        kwSub: 'RPP ranking, organic search ranking, verification time', 
-        lockNote: 'After submitting the form, we will send you the full PDF by email.',
+        oppSub: 'Click a product to update the keywords on the right',
+        kwTitle: 'Top keywords snapshot', 
+        kwSub: 'RPP rank, organic rank, and time checked', 
+        lockNote: 'Sample view: some keywords and ranks are blurred. Submit the form to receive the full report by email.',
         thKeyword: 'Keyword', 
         thRpp: 'RPP Rank', 
         thOrg: 'Organic Rank', 
         thChecked: 'Checked', 
         thAction: 'Action',
-        aiTitle: 'Action plan from AI <span class="badge">NEW</span>', 
-        aiSub: 'Based on the report, we automatically generate title revision proposals and RPP addition suggestions for each product.',
-        shopsTitle: 'Case study of Rakuten First Half-Year Ranking 2025 award-winning shops', 
-        shopsSub: 'Keyword report of genre awards is published',
+        aiTitle: 'AI Action Plan <span class="badge">NEW</span>', 
+        aiSub: 'Per-item recommendations generated from your keyword report. Specific title edits and RPP adds.',
+        shopsTitle: 'Examples from Major Shops', 
+        shopsSub: 'See sample keyword reports from successful Rakuten stores across different industries.',
         s1t: 'Analyze', 
         s1d: 'We assess RPP and organic ranks.', 
         s2t: 'Report', 
-        s2d: 'We will provide you with a PDF summarizing improvement points and actions to be taken.', 
+        s2d: 'You receive a PDF with insights and actions.', 
         s3t: 'AI analysis', 
-        s3d: 'We will present improvements for product names and RPP, along with an action plan.',
+        s3d: 'You receive an AI action plan with title and RPP suggestions.',
         reqTitle: 'Request your keyword report', 
         reqSub: 'We will contact you to confirm scope and timing.',
         labShop: 'Shop name', 
@@ -60,53 +59,51 @@ const I18N = {
         labNotes: 'Notes',
         agreeText: 'I agree to be contacted by TENKI-JAPAN about this request.', 
         submitBtn: 'Request report',
-        footProcess: 'Service Flow', 
-        footSample: 'Your Shop Demo', 
-        samplePdfLink: 'Your Shop PDF Example',
-        viewSampleReport: 'View Sample Report',
-        langButton: '日本語',
-        faqTitle: 'FAQ',
-        faqAction: 'Action'
+        footProcess: 'Process', 
+        footSample: 'Sample', 
+        samplePdfLink: 'Sample PDF',
+        langButton: '日本語'
     },
     ja: {
-        navProcess: 'サービスの流れ', 
-        navSample: '貴店デモ', 
-        ctaTop: '無料レポートを申し込む',
-        preparedLabel: '貴店専用',  // need trans
-        promoText: 'NEW｜期間限定で無料AI分析提供',
+        navProcess: '進め方', 
+        navSample: 'サンプル', 
+        ctaTop: '無料サンプルを申し込む',
+        preparedLabel: 'ご提供先', 
+        promoText: 'NEW｜期間限定：無料AI分析付き',
         heroTitle: '楽天キーワード最適化レポート', 
-        ctaPrimary: '無料レポートを申し込む', 
+        heroSubtitle: 'RPPと自然検索の掲載状況・順位を可視化。次にやるべき施策を簡潔にまとめたPDFをお届けします。',
+        ctaPrimary: '無料サンプルを申し込む', 
         samplePdfBtn: 'サンプルPDFを見る',
         tag1: 'プライバシー配慮', 
         tag2: '実行可能', 
         tag3: '楽天特化',
-        slideCaption: 'プレビュー画面。完全版では最大20商品分のデータが閲覧できます。',
-        b1t: '効果的なキーワードを特定', 
-        b1d: 'RPPまたは自然検索で狙うべきキーワードを特定',
-        b2t: '市場比較してギャップを把握', 
-        b2d: '機会損失とコスト高のキーワードが把握できる',
-        b3t: '検索マーケティング戦略立案', 
-        b3d: '具体的なSEOキーワード発見及びRPPのキーワード調整の方法の発見',
+        slideCaption: 'プレビュー。完全版PDFにはキーワード表と提案が含まれます。',
+        b1t: '効果の高いキーワードを特定', 
+        b1d: 'RPPまたは自然検索で弱い箇所を発見。',
+        b2t: '市場との比較・ギャップ', 
+        b2d: '見逃している機会を把握。',
+        b3t: '次のアクションを明確化', 
+        b3d: '商品名・関連KW・RPPの具体的な修正案。',
         oppTitle: '商品を選択', 
-        oppSub: '商品クリックで主要キーワード一部抜粋に表示されます。',
-        kwTitle: '主要キーワード一部抜粋', 
-        kwSub: 'RPP順位、自然検索順位、確認時間', 
-        lockNote: 'フォームを送信後、完全版PDFをメールでお送りします。',
+        oppSub: 'クリックで右側のキーワードが切り替わります',
+        kwTitle: '主要キーワードのスナップショット', 
+        kwSub: 'RPP順位・自然順位・計測時刻', 
+        lockNote: 'サンプル表示：一部のキーワードや順位は伏せています。フォーム送信で完全版PDFをメールでお送りします。',
         thKeyword: 'キーワード', 
         thRpp: 'RPP順位', 
-        thOrg: '自然検索順位', 
-        thChecked: '確認時間', 
+        thOrg: '自然順位', 
+        thChecked: '計測時刻', 
         thAction: 'アクション',
-        aiTitle: 'AIからのアクションプラン <span class="badge">NEW</span>', 
-        aiSub: 'レポートをもとに、商品ごとにタイトルの修正案とRPP追加案を自動生成します。',
-        shopsTitle: '楽天上半期の受賞店舗事例', 
+        aiTitle: 'AIアクションプラン <span class="badge">NEW</span>', 
+        aiSub: 'レポートを元に商品ごとのタイトル修正・RPP追加案を自動生成。',
+        shopsTitle: '大手ショップの事例', 
         shopsSub: '様々な業界の成功している楽天ショップのキーワードレポートサンプルをご覧ください。',
         s1t: '分析', 
         s1d: 'RPPと自然順位を評価します。', 
         s2t: 'レポート', 
-        s2d: '改善ポイントと実施すべきアクションをまとめたPDFをお届けします。', 
+        s2d: '示唆とアクションをPDFでお届けします。', 
         s3t: 'AI分析', 
-        s3d: '商品名とRPPの改善やアクションプランを提示します。',
+        s3d: 'タイトルとRPPの具体的ToDoを提示します。',
         reqTitle: 'キーワードレポートを申し込む', 
         reqSub: '内容と納期を確認のうえご連絡します。',
         labShop: '店舗名', 
@@ -117,13 +114,10 @@ const I18N = {
         labNotes: 'メモ',
         agreeText: '本申込みに関する連絡をTENKI-JAPANから受け取ることに同意します。', 
         submitBtn: '申し込む',
-        footProcess: 'サービスの流れ', 
-        footSample: '貴店デモ', 
-        samplePdfLink: '貴店PDF例',
-        viewSampleReport: 'サンプルレポートを見る',
-        langButton: 'EN',
-        faqTitle: 'よくある質問',
-        faqAction: 'アクション'
+        footProcess: '進め方', 
+        footSample: 'サンプル', 
+        samplePdfLink: 'サンプルPDF',
+        langButton: 'EN'
     }
 };
 
@@ -142,7 +136,7 @@ function applyI18n(lang) {
         'b1t', 'b1d', 'b2t', 'b2d', 'b3t', 'b3d', 'oppTitle', 'oppSub', 'kwTitle', 'kwSub', 'shopsTitle', 'shopsSub', 
         'thKeyword', 'thRpp', 'thOrg', 'thChecked', 'aiTitle', 'aiSub', 's1t', 's1d', 's2t', 
         's2d', 's3t', 's3d', 'reqTitle', 'reqSub', 'labShop', 'labUrl', 'labContact', 'labEmail', 
-        'labRms', 'labNotes', 'agreeText', 'submitBtn', 'footProcess', 'footSample', 'samplePdfLink', 'faqTitle'
+        'labRms', 'labNotes', 'agreeText', 'submitBtn', 'footProcess', 'footSample', 'samplePdfLink'
     ];
     
     // Update lock note if it exists
@@ -189,57 +183,12 @@ function applyI18n(lang) {
    APPLICATION SETTINGS AND CONFIGURATION
    ============================================================================= */
 
-// function to test if parameters are correct or not
-const testParams = async (shop, hash) => {
-    const url = `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop}/report/20/${shop}-keywords-shop-${hash}.json`
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            return false; // URL doesn't exist or returns error
-        }
-        const data = await response.json();
-        // Check if data is empty
-        return data && typeof data === 'object' && Object.keys(data).length > 0;
-    } catch (error) {
-        //console.error('Fetch error:', error);
-        return false; // Network error or invalid JSON
-    }
-}
-
 // Default application settings - using zhong sample data.  
 
-// Default fallback values
-let shop_id_url_default = 'z-craft';
-let hash_default = '5sy5a7-13xuq3p-15bsqkk';
-let shop_id_url;
-let hash; 
-
-// Parse URL parameter in format: /?shopname_hash
+// Get parameters from URL or use defaults
 const urlParams = new URLSearchParams(window.location.search);
-const fullParam = window.location.search.slice(1); // Remove the '?' at the beginning
-
-if (fullParam && fullParam.includes('_')) {
-    // Split by the last underscore to separate shop_id from hash
-    const parts = fullParam.split('_');
-    if (parts.length >= 2) {
-        shop_id_url = parts[0];
-        hash = parts.slice(1).join('_'); // Join remaining parts in case hash contains underscores
-        const ok = await testParams(shop_id_url, hash);
-        if (!ok) {
-            shop_id_url = shop_id_url_default;
-            hash = hash_default;
-        }
-    }
-} else {
-    // Fallback to individual parameters for backward compatibility
-    shop_id_url = urlParams.get('shop_id_url') || shop_id_url_default;
-    hash = urlParams.get('hash') || hash_default;
-    const ok = await testParams(shop_id_url, hash);
-    if (!ok) {
-        shop_id_url = shop_id_url_default;
-        hash = hash_default;
-    }
-}
+let hash = urlParams.get('hash') || '11fd69c-147r6ap-1479772';
+let shop_id_url = urlParams.get('shop_id_url') || 'solairo';
 
 const SETTINGS = {
     dataUrl: `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop_id_url}/report/20/${shop_id_url}-keywords-shop-${hash}.json`,
@@ -264,12 +213,6 @@ const SETTINGS = {
 const q = new URLSearchParams(location.search);
 const qpLang = q.get('lang');
 let langState = (qpLang === 'en' ? 'en' : (qpLang === 'ja' ? 'ja' : (localStorage.getItem('lang') || 'ja')));
-
-window.SETTINGS = SETTINGS;
-window.langState = langState;
-window.I18N = I18N;
-window.selectCategory = selectCategory;
-window.startCategoryAutoAdvance = startCategoryAutoAdvance;
 
 // Demo gating - controls whether content is locked/blurred
 window.LOCKED = true;
@@ -525,8 +468,8 @@ const H = {
     image: ['image_url', 'img', 'image', '商品画像URL', '画像URL', '画像URL1', '画像1'],
     keyword: ['keyword', 'kw', 'term', 'キーワード'],
     rpp: ['rpp', 'rpp_rank', 'rppRank', 'RPP順位', 'RPP順'],
-    org: ['seo', 'organic', 'organic_rank', 'org', 'rank', '自然検索順位', '自然'],
-    checked: ['checked', 'date', 'timestamp', 'time', '確認時間', '取得日時', '計測日時', '取得時刻'],
+    org: ['seo', 'organic', 'organic_rank', 'org', 'rank', '自然順位', '自然'],
+    checked: ['checked', 'date', 'timestamp', 'time', '計測時刻', '取得日時', '計測日時', '取得時刻'],
     slide: ['slide', 'スライド', 'ページ']
 };
 
@@ -687,11 +630,6 @@ function renderKeywords(list) {
     const ln = document.getElementById('lockNote');
     if (ln) {
         ln.style.display = 'block';
-    }
-    
-    // Create keyword cloud when keywords are rendered (only once, faster)
-    if (!document.querySelector('.keyword-cloud')) {
-        setTimeout(createKeywordCloud, 200);
     }
 }
 
@@ -863,6 +801,41 @@ function updateActiveSelection() {
    STATISTICS DISPLAY
    ============================================================================= */
 
+/**
+ * Render statistics summary
+ */
+function renderStats() {
+    const slides = Number(SETTINGS.slides != null ? SETTINGS.slides : 0);
+    const kwc = Number(SETTINGS.kwCount != null ? SETTINGS.kwCount : 0);
+    const rppc = Number(SETTINGS.rppCount != null ? SETTINGS.rppCount : 0);
+    const pct = (kwc > 0) ? Math.round(100 * rppc / kwc) : null;
+    renderStatsSentence();
+}
+
+/**
+ * Render the statistics sentence in the stats card
+ */
+function renderStatsSentence() {
+    const hostCard = document.getElementById('statsSentence');
+    const txt = document.getElementById('statsSentenceText');
+    if (!hostCard || !txt) return;
+    
+    const slides = Number(SETTINGS.slides || 0);
+    const kw = Number(SETTINGS.kwCount || 0);
+    const rpp = Number(SETTINGS.rppCount || 0);
+    const pct = (kw > 0) ? Math.round(100 * rpp / kw) : 0;
+    let date = fmtJST(SETTINGS.updatedAt || '');
+    const fmt = n => new Intl.NumberFormat((typeof langState !== 'undefined' && langState === 'en') ? 'en-US' : 'ja-JP').format(n);
+    
+    const jp = `全 <span class="num">${fmt(slides)}</span> 商品で <span class="num">${fmt(kw)}</span> 件のキーワードを分析。RPP順位あり <span class="num">${fmt(rpp)}</span> 件（RPP率 <span class="num">${fmt(pct)}</span>%）。<span class="muted">最終更新 ${date} JST</span>`;
+    const en = `Analyzed <span class="num">${fmt(kw)}</span> keywords across <span class="num">${fmt(slides)}</span> items. <span class="num">${fmt(rpp)}</span> with RPP ranks (RPP rate <span class="num">${fmt(pct)}</span>%). <span class="muted">Updated ${date} JST</span>`;
+    
+    txt.innerHTML = (typeof langState !== 'undefined' && langState === 'en') ? en : jp;
+    try {
+        document.documentElement.setAttribute('lang', (typeof langState !== 'undefined' && langState === 'en') ? 'en' : 'ja');
+    } catch (_) { }
+    hostCard.style.display = 'block';
+}
 
 /* =============================================================================
    CSV DATA LOADING AND PROCESSING
@@ -916,10 +889,8 @@ async function buildFromCsv() {
             const row = {
                 keyword: (pick(rr, H.keyword) || findContains(rr, ['キーワード', 'keyword', 'kw', 'term', '用語', '検索', 'ワード']) || firstTextValue(rr)),
                 rppRank: pick(rr, H.rpp) || findContains(rr, ['RPP', 'rpp']),
-                seoRank: pick(rr, H.org) || findContains(rr, ['自然検索順位', '自然', 'organic', 'seo']),
-                organicRank: pick(rr, H.org) || findContains(rr, ['自然検索順位', '自然', 'organic', 'seo']),
-                checkedAt: pick(rr, H.checked) || findContains(rr, ['計測', '取得', '時刻', 'timestamp', 'date', 'time']),
-                name: (pick(rr, H.keyword) || findContains(rr, ['キーワード', 'keyword', 'kw', 'term', '用語', '検索', 'ワード']) || firstTextValue(rr))
+                organicRank: pick(rr, H.org) || findContains(rr, ['自然順位', '自然', 'organic', 'seo']),
+                checkedAt: pick(rr, H.checked) || findContains(rr, ['計測', '取得', '時刻', 'timestamp', 'date', 'time'])
             };
             rowsAll.push(row);
             if (!byId.has(iid)) byId.set(iid, []);
@@ -965,6 +936,7 @@ async function buildFromCsv() {
         renderItemsList();
         CURRENT_IDX = 0;
         applySelection();
+        renderStats();
         return items.length > 0 || kwRows.length > 0;
     } catch (e) {
         return false;
@@ -983,10 +955,8 @@ try {
 // Set current year in footer
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Update page title with shop_id_url
-document.title = document.title.replace('[shop_id_url]', shop_id_url);
-
 applyI18n(typeof langState !== 'undefined' ? langState : 'ja');
+renderStats();
 buildItemsFromSettings();
 renderItemsList();
 applySelection();
@@ -1075,10 +1045,13 @@ if (!window.USER_CLICKED && window.startAutoSelect) window.startAutoSelect();
                 if (nm && !SETTINGS.shopName) nm.textContent = shop;
             }
 
+            renderStats();
             if (data.aiActions) renderAiActions(data.aiActions);
         } catch (e) {
-            // Error handling - data loading failed
+            renderStats();
         }
+    } else {
+        renderStats();
     }
 })();
 
@@ -1091,11 +1064,11 @@ document.getElementById('footLangSwitch')?.addEventListener('click', () => {
     langState = (langState === 'en' ? 'ja' : 'en');
     localStorage.setItem('lang', langState);
     applyI18n(langState);
+    renderStats();
     const it = (SETTINGS.items || [])[CURRENT_IDX] || {};
     const kw = Array.isArray(it.keywords) ? it.keywords : SETTINGS.topKeywords;
     renderKeywords(kw || []);
     renderAiActions(SETTINGS.aiActions);
-    renderFAQ(); // Update FAQ when language changes
     setTimeout(setMobileListHeight, 0);
 });
 
@@ -1187,7 +1160,6 @@ function stopAllAutoAdvance() {
         window.AUTO_TIMER = null;
     }
 }
-
 
 /**
  * Scroll the items list to keep the active item visible
@@ -1288,7 +1260,6 @@ setTimeout(() => {
 })();
 
 
-
 /* =============================================================================
    FINAL SETUP AND INTEGRATIONS
    ============================================================================= */
@@ -1342,6 +1313,38 @@ setTimeout(() => {
             io.observe(footer);
         })();
 
+        // HubSpot prefill: 店舗名／URL with shop_id_url (editable, prefilled)
+        function prefillHS() {
+            var root = document.querySelector('.hs-form-frame');
+            if (!root) return;
+            var shopId = (window.shop_id_url || (window.SETTINGS && SETTINGS.shopIdUrl) || '');
+            if (!shopId) return;
+            var inputs = root.querySelectorAll('input');
+            inputs.forEach(function(inp) {
+                var meta = (inp.getAttribute('name') || '') + (inp.getAttribute('aria-label') || '') + (inp.getAttribute('placeholder') || '');
+                if (/店舗名|URL|shop_id|shop|ショップ/i.test(meta)) {
+                    if (!inp.value) {
+                        inp.value = shopId;
+                        inp.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                }
+            });
+        }
+        
+        window.addEventListener('message', function(ev) {
+            try {
+                if (ev && ev.data && ev.data.type === 'hsFormCallback' && ev.data.eventName === 'onFormReady') {
+                    setTimeout(prefillHS, 150);
+                }
+            } catch (e) { }
+        });
+        
+        // Retry loop in case the form mounts late
+        var tries = 0, t = setInterval(function() {
+            tries++;
+            prefillHS();
+            if (tries > 80) clearInterval(t);
+        }, 100);
     } catch (e) { }
 })();
 
@@ -1350,52 +1353,13 @@ setTimeout(() => {
    ============================================================================= */
 
 let shopsData = null;
-let categoryAutoTimer = null;
-let categoryUserClicked = false;
-
-/**
- * Central function to handle category selection
- * @param {string} categoryName - Name of category to select
- */
-function selectCategory(categoryName) {
-    // Remove active class from all category buttons
-    let activeBtn = null;
-    document.querySelectorAll('.category-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.textContent === categoryName) {
-            btn.classList.add('active');
-            activeBtn = btn;
-        }
-    });
-    
-    // Always scroll active button into view on mobile (for auto-select visibility)
-    if (activeBtn && window.matchMedia('(max-width: 768px)').matches) {
-        const categoryMenu = document.getElementById('categoryMenu');
-        if (categoryMenu) {
-            const btnRect = activeBtn.getBoundingClientRect();
-            const menuRect = categoryMenu.getBoundingClientRect();
-            const scrollLeft = activeBtn.offsetLeft - (categoryMenu.clientWidth / 2) + (activeBtn.offsetWidth / 2);
-            
-            categoryMenu.scrollTo({
-                left: Math.max(0, scrollLeft),
-                behavior: 'smooth'
-            });
-        }
-    }
-    
-    // Generate shop cards for this category
-    if (shopsData) {
-        const filteredShops = shopsData.filter(shop => shop.genre === categoryName);
-        generateShopCards(filteredShops);
-    }
-}
 
 /**
  * Fetch shops data from JSON file
  */
 async function fetchShopsData() {
     try {
-        const response = await fetch('shops.json');
+        const response = await fetch('35_shops.json');
         if (!response.ok) throw new Error('Failed to fetch shops data');
         
         // Get raw text first to handle NaN values
@@ -1433,21 +1397,20 @@ function generateCategoryMenu(shops) {
         btn.className = 'category-btn';
         btn.textContent = category;
         btn.onclick = () => {
-            categoryUserClicked = true;
-            if (categoryAutoTimer) clearInterval(categoryAutoTimer);
-            selectCategory(category);
+            // Remove active class from all buttons
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+            // Generate shop cards for this category
+            generateShopCards(shops.filter(shop => shop.genre === category));
         };
         categoryMenu.appendChild(btn);
     });
     
-    // Auto-select first category
+    // Auto-click first category
     if (categories.length > 0) {
-        selectCategory(categories[0]);
-        
-        // Start auto-advance if multiple categories
-        if (categories.length > 1) {
-            startCategoryAutoAdvance(categories);
-        }
+        const firstBtn = categoryMenu.querySelector('.category-btn');
+        if (firstBtn) firstBtn.click();
     }
 }
 
@@ -1461,13 +1424,12 @@ function generateShopCards(shops) {
     
     shopCards.innerHTML = '';
     
-    // On mobile, limit to first 3 cards visible, rest scrollable
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const shopsToShow = isMobile ? shops.slice(0, 6) : shops; // Show 6 on mobile for scrolling
-    
-    shopsToShow.forEach(shop => {
-        const card = document.createElement('div');
+    shops.forEach(shop => {
+        const card = document.createElement('a');
         card.className = 'shop-card';
+        card.href = `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop.shop}/report/20/${shop.shop}-keywords-shop-${shop.hash}.pdf`;
+        card.target = '_blank';
+        card.rel = 'noopener';
         
         const logo = document.createElement('img');
         logo.className = 'shop-logo';
@@ -1488,32 +1450,11 @@ function generateShopCards(shops) {
         category.className = 'shop-category';
         category.textContent = shop.secondary_genre;
         
-        const button = document.createElement('a');
-        button.className = 'btn shop-report-btn';
-        const hash = shop.hash.split('_').pop();
-        button.href = `https://data.tenki-japan.co.jp/rakuten.co.jp/${shop.shop}/report/20/${shop.shop}-keywords-shop-${hash}.pdf`;
-        button.target = '_blank';
-        button.rel = 'noopener';
-        button.textContent = I18N[langState || 'ja'].viewSampleReport;
-        
-        // Stop auto-select when clicking report button
-        button.addEventListener('click', () => {
-            categoryUserClicked = true;
-            if (categoryAutoTimer) clearInterval(categoryAutoTimer);
-        });
-        
         info.appendChild(name);
         info.appendChild(category);
-        info.appendChild(button);
         
         card.appendChild(logo);
         card.appendChild(info);
-        
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('.shop-report-btn')) return;
-            categoryUserClicked = true;
-            if (categoryAutoTimer) clearInterval(categoryAutoTimer);
-        });
         
         shopCards.appendChild(card);
     });
@@ -1529,718 +1470,7 @@ async function initializeShopCategories() {
     }
 }
 
-/**
- * Start category auto-advance
- * @param {Array} categories - List of category names
- */
-function startCategoryAutoAdvance(categories) {
-    if (categoryUserClicked) return;
-    
-    let currentIndex = 0;
-    
-    setTimeout(() => {
-        if (categoryUserClicked) return;
-        
-        categoryAutoTimer = setInterval(() => {
-            if (categoryUserClicked) {
-                clearInterval(categoryAutoTimer);
-                categoryAutoTimer = null;
-                return;
-            }
-            
-            // Move to next category
-            currentIndex = (currentIndex + 1) % categories.length;
-            selectCategory(categories[currentIndex]);
-            
-        }, 2000); // Change category every 2 seconds
-        
-    }, 3000); // Start after 3 second delay
-}
-
 // Initialize shop categories when page loads
-const bootShops = () => { initializeShopCategories(); };
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', bootShops);
-} else {
-    bootShops(); // DOM is already ready
-}
-
-// Auto-fill HubSpot form by intercepting iframe creation (single load)
-if (shop_id_url) {
-    // Create MutationObserver to catch iframe creation before it loads
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            mutation.addedNodes.forEach((node) => {
-                // Check if added node is an iframe or contains iframes
-                if (node.nodeType === Node.ELEMENT_NODE) {
-                    let iframes = [];
-                    
-                    if (node.tagName === 'IFRAME') {
-                        iframes = [node];
-                    } else if (node.querySelectorAll) {
-                        iframes = Array.from(node.querySelectorAll('iframe'));
-                    }
-                    
-                    // Process HubSpot iframes
-                    iframes.forEach((iframe) => {
-                        if (iframe.src && iframe.src.includes('hsforms.net')) {
-                            const iframeSrc = new URL(iframe.src);
-                            
-                            // Add shop_id_url parameter if not already present
-                            if (!iframeSrc.searchParams.has('shop_id_url')) {
-                                iframeSrc.searchParams.set('shop_id_url', shop_id_url);
-                                iframe.src = iframeSrc.toString();
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    });
-    
-    // Start observing
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
-    
-    // Stop observing after 15 seconds to prevent memory leaks
-    setTimeout(() => {
-        observer.disconnect();
-    }, 15000);
-}
-
-/* =============================================================================
-   3D KEYWORD CLOUD BACKGROUND (TagCloud.js)
-   ============================================================================= */
-
-let tagCloudInstance = null;
-
-// Initialize TagCloud container
-function initTagCloudContainer() {
-    // Remove existing cloud if any
-    const existingCloud = document.querySelector('.keyword-cloud');
-    if (existingCloud) existingCloud.remove();
-    
-    // Create new cloud container
-    const cloud = document.createElement('div');
-    cloud.className = 'keyword-cloud';
-    cloud.id = 'keywordCloud';
-    document.body.appendChild(cloud);
-    
-    return cloud;
-}
-
-// Main function to create the 3D keyword cloud
-function createKeywordCloud() {
-    // Check if TagCloud library is loaded
-    if (typeof TagCloud === 'undefined') {
-        setTimeout(createKeywordCloud, 500);
-        return;
-    }
-    
-    // Get all keywords from all items (same logic as before)
-    const items = SETTINGS.items || [];
-    if (!items.length) return;
-    
-    // Extract all keywords from all items
-    const allKeywords = [];
-    items.forEach(item => {
-        if (Array.isArray(item.keywords)) {
-            item.keywords.forEach(kw => {
-                if (kw && kw.keyword && kw.keyword.length > 1) {
-                    allKeywords.push(kw.keyword);
-                }
-            });
-        }
-    });
-    
-    // Remove duplicates and limit count
-    const uniqueKeywords = [...new Set(allKeywords)];
-    if (!uniqueKeywords.length) return;
-    
-    // Select keywords for the cloud (20-40 keywords work best for TagCloud)
-    const targetCount = Math.max(20, Math.min(40, uniqueKeywords.length));
-    const keywordsToShow = [];
-    
-    // Duplicate keywords if needed to reach target count
-    while (keywordsToShow.length < targetCount) {
-        keywordsToShow.push(...uniqueKeywords);
-    }
-    
-    // Shuffle and trim to target count
-    keywordsToShow.sort(() => Math.random() - 0.5);
-    keywordsToShow.splice(targetCount);
-    
-    // Create cloud container
-    const container = initTagCloudContainer();
-    
-    // Destroy existing TagCloud instance if it exists
-    if (tagCloudInstance && tagCloudInstance.destroy) {
-        tagCloudInstance.destroy();
-    }
-    
-    // Initialize TagCloud with very large radius to fill screen
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const sphereRadius = isMobile ? 600 : 1400;
-    
-    tagCloudInstance = TagCloud(container, keywordsToShow, {
-        // Very large radius to spread across entire screen
-        radius: sphereRadius,
-        
-        // Animation speed - faster to start automatically
-        maxSpeed: 'normal',
-        initSpeed: 'fast',
-        
-        // Direction and interaction
-        direction: 135,
-        keep: true, // Enable mouse interaction
-        
-        // Don't use HTML for now - just plain text
-        useHTML: false,
-    });
-    
-    // Start automatic rotation by simulating mouse movement
-    setTimeout(() => {
-        if (tagCloudInstance) {
-            // Trigger initial movement to start the animation
-            const event = new MouseEvent('mousemove', {
-                clientX: window.innerWidth / 2,
-                clientY: window.innerHeight / 2
-            });
-            container.dispatchEvent(event);
-        }
-    }, 500);
-}
-
-// Clear existing TagCloud
-function clearKeywordCloud() {
-    if (tagCloudInstance && tagCloudInstance.destroy) {
-        tagCloudInstance.destroy();
-        tagCloudInstance = null;
-    }
-    const cloud = document.querySelector('.keyword-cloud');
-    if (cloud) cloud.remove();
-}
-
-/* =============================================================================
-   TYPEWRITER RECOMMENDATION SYSTEM
-   ============================================================================= */
-
-// Advanced typewriter configuration with conditional logic
-const typewriterConfig = {
-    SEO_HIGH_MAX_RANK: 5,
-    MAX_LINE_LEN: 34,
-    animation: { typeSpeed: 22, eraseSpeed: 14, holdDuration: 1600, gapDuration: 400 },
-    labels: {
-        thisProduct: "対象商品",
-        joiner: "・",
-        summaryPattern: "{item}｜{total}件のキーワード（RPP {rpp}件）",
-        rppFocusPattern: "{item}｜注目RPP: {kws}",
-        nextTargetsPattern: "{item}｜次点: SEO上位 {kws}",
-        seoHighPattern: "{item}｜SEO上位: {kws}",
-        rppCandidatePattern: "{item}｜RPP候補: {kws}",
-        seoActivePattern: "{item}｜SEO掲載中: {kws}",
-        noKeywords: "キーワードなし",
-        loading: "データ読み込み中...",
-        fallback: "—"
-    }
-};
-
-let typewriterRunning = false;
-let currentProductIndex = 0;
-let currentLineIndex = 0;
-
-/**
- * Convert value to integer with null fallback
- */
-function toInt(n) {
-    if (typeof n === "number" && isFinite(n)) return Math.trunc(n);
-    if (typeof n === "string" && n.trim() !== "" && !isNaN(Number(n))) return Math.trunc(Number(n));
-    return null;
-}
-
-/**
- * Check if keyword has RPP ranking
- */
-function hasRpp(k) {
-    const r = toInt(k.rppRank);
-    return r !== null && r >= 1;
-}
-
-/**
- * Check if keyword has SEO ranking
- */
-function hasSeo(k) {
-    const s = toInt(k.seoRank || k.organicRank);
-    return s !== null && s >= 1;
-}
-
-/**
- * Sort keywords by RPP rank, then clicks, then name
- */
-function byRpp(a, b) {
-    const ar = toInt(a.rppRank) ?? Number.POSITIVE_INFINITY;
-    const br = toInt(b.rppRank) ?? Number.POSITIVE_INFINITY;
-    if (ar !== br) return ar - br;
-    const ac = toInt(a.clicks) ?? -1;
-    const bc = toInt(b.clicks) ?? -1;
-    if (ac !== bc) return bc - ac;
-    return (a.keyword || a.name || '').localeCompare(b.keyword || b.name || '', "ja");
-}
-
-/**
- * Sort keywords by SEO rank, then impressions, then name
- */
-function bySeo(a, b) {
-    const ar = toInt(a.seoRank || a.organicRank) ?? Number.POSITIVE_INFINITY;
-    const br = toInt(b.seoRank || b.organicRank) ?? Number.POSITIVE_INFINITY;
-    if (ar !== br) return ar - br;
-    const ai = toInt(a.impressions) ?? -1;
-    const bi = toInt(b.impressions) ?? -1;
-    if (ai !== bi) return bi - ai;
-    return (a.keyword || a.name || '').localeCompare(b.keyword || b.name || '', "ja");
-}
-
-/**
- * Sanitize keywords array
- */
-function sanitizeKeywords(kws) {
-    return (kws || [])
-        .filter(k => k && typeof (k.keyword || k.name) === "string" && (k.keyword || k.name).trim().length > 0)
-        .map(k => ({ ...k, name: (k.keyword || k.name).trim(), keyword: (k.keyword || k.name).trim() }));
-}
-
-/**
- * Clamp string to max length with ellipsis
- */
-function clamp(s, max) {
-    if (s.length <= max) return s;
-    return s.slice(0, max - 3) + "...";
-}
-
-/**
- * Fill pattern with values
- */
-function fill(pattern, values) {
-    return pattern
-        .replace("{item}", values.item)
-        .replace("{total}", String(values.total))
-        .replace("{rpp}", String(values.rpp))
-        .replace("{kws}", values.kws);
-}
-
-/**
- * Render list line with keyword fitting logic
- */
-function renderListLine(pattern, item, total, rpp, names, cfg) {
-    const joiner = cfg.labels.joiner;
-    const prefix = fill(pattern, { item, total, rpp, kws: "" });
-    if (names.length === 0) {
-        const line = clamp(prefix, cfg.MAX_LINE_LEN);
-        return line ? { line, usedNames: [] } : null;
-    }
-
-    // Greedily drop the last keyword until within limit
-    let used = names.slice();
-    while (used.length > 0) {
-        const kws = used.join(joiner);
-        const full = prefix + kws;
-        if (full.length <= cfg.MAX_LINE_LEN) return { line: full, usedNames: used };
-        used.pop();
-    }
-
-    // If even one keyword overflows, show prefix only, clamped
-    let fallbackLine = clamp(prefix, cfg.MAX_LINE_LEN);
-    // Replace trailing colon with ellipsis if no keywords could fit
-    if (fallbackLine.endsWith(': ')) {
-        fallbackLine = fallbackLine.slice(0, -2) + '...';
-    } else if (fallbackLine.endsWith(':')) {
-        fallbackLine = fallbackLine.slice(0, -1) + '...';
-    }
-    return fallbackLine ? { line: fallbackLine, usedNames: [] } : null;
-}
-
-/**
- * Render plain line without keywords
- */
-function renderPlainLine(pattern, item, total, rpp, cfg) {
-    const s = fill(pattern, { item, total, rpp, kws: "" });
-    return clamp(s, cfg.MAX_LINE_LEN);
-}
-
-/**
- * Pick names with exclusion logic
- */
-function pickNames(list, limit, exclude) {
-    const out = [];
-    for (const k of list) {
-        if (out.length >= limit) break;
-        if (exclude.has(k.keyword || k.name)) continue;
-        out.push(k.keyword || k.name);
-    }
-    return out;
-}
-
-/**
- * Build typewriter lines using advanced logic from TypeScript
- */
-function buildTypewriter(product, cfg) {
-    const config = cfg || typewriterConfig;
-    const item = (product.itemIdUrl || "").trim() || config.labels.thisProduct;
-    const keywords = sanitizeKeywords(product.keywords);
-    if (product.loading) return { lines: [config.labels.loading], animation: config.animation };
-
-    const total = toInt(product.totalKeywordCount) ?? keywords.length;
-    const rppKeywords = keywords.filter(hasRpp).sort(byRpp);
-    const rppCount = rppKeywords.length;
-
-    const seoHigh = keywords
-        .filter(k => !hasRpp(k) && hasSeo(k) && (toInt(k.seoRank || k.organicRank) ?? Number.MAX_SAFE_INTEGER) <= config.SEO_HIGH_MAX_RANK)
-        .sort(bySeo);
-
-    const seoOthers = keywords
-        .filter(k => !hasRpp(k) && hasSeo(k) && (toInt(k.seoRank || k.organicRank) ?? Number.MAX_SAFE_INTEGER) > config.SEO_HIGH_MAX_RANK)
-        .sort(bySeo);
-
-    if (total === 0 || keywords.length === 0) {
-        return { lines: [config.labels.noKeywords], animation: config.animation };
-    }
-
-    const lines = [];
-    const usedNames = new Set();
-
-    // A) Summary
-    lines.push(renderPlainLine(config.labels.summaryPattern, item, total, rppCount, config));
-
-    if (rppCount > 0) {
-        // B1) RPP focus (up to 3)
-        const namesB1 = pickNames(rppKeywords, 3, usedNames);
-        const resB1 = renderListLine(config.labels.rppFocusPattern, item, total, rppCount, namesB1, config);
-        if (resB1) {
-            lines.push(resB1.line);
-            resB1.usedNames.forEach(n => usedNames.add(n));
-        }
-
-        // B2) Next targets if SEO high exists (up to 2)
-        if (seoHigh.length > 0) {
-            const namesB2 = pickNames(seoHigh, 2, usedNames);
-            const resB2 = renderListLine(config.labels.nextTargetsPattern, item, total, rppCount, namesB2, config);
-            if (resB2) {
-                lines.push(resB2.line);
-                resB2.usedNames.forEach(n => usedNames.add(n));
-            }
-        }
-    } else {
-        // C1) SEO high (up to 3)
-        if (seoHigh.length > 0) {
-            const namesC1 = pickNames(seoHigh, 3, usedNames);
-            const resC1 = renderListLine(config.labels.seoHighPattern, item, total, rppCount, namesC1, config);
-            if (resC1) {
-                lines.push(resC1.line);
-                resC1.usedNames.forEach(n => usedNames.add(n));
-            }
-
-            // C2) RPP candidate (first of SEO high)
-            const namesC2 = pickNames(seoHigh, 1, usedNames);
-            const resC2 = renderListLine(config.labels.rppCandidatePattern, item, total, rppCount, namesC2, config);
-            if (resC2) {
-                lines.push(resC2.line);
-                resC2.usedNames.forEach(n => usedNames.add(n));
-            }
-        } else if (seoOthers.length > 0) {
-            // D) SEO active (up to 2)
-            const namesD = pickNames(seoOthers, 2, usedNames);
-            const resD = renderListLine(config.labels.seoActivePattern, item, total, rppCount, namesD, config);
-            if (resD) {
-                lines.push(resD.line);
-                resD.usedNames.forEach(n => usedNames.add(n));
-            }
-        }
-    }
-
-    // Fail-safe
-    const finalLines = lines.filter(s => typeof s === "string" && s.trim().length > 0);
-    if (finalLines.length === 0) finalLines.push(config.labels.fallback);
-
-    // Limit to 3 lines per cycle
-    return { lines: finalLines.slice(0, 3), animation: config.animation };
-}
-
-/**
- * Load typewriter configuration from JSON file (legacy fallback)
- */
-async function loadTypewriterConfig() {
-    // Return the built-in advanced config
-    return typewriterConfig;
-}
-
-/**
- * Crop title to specified length with proper handling of Japanese characters
- */
-function cropTitle(title, maxLength = 70) {
-    if (!title) return '';
-    const cleanTitle = String(title).trim();
-    
-    if (cleanTitle.length <= maxLength) return cleanTitle;
-    return cleanTitle.substring(0, maxLength) + '...';
-}
-
-/**
- * Transform SETTINGS.items to advanced typewriter format
- */
-function buildTypewriterItems() {
-    const items = SETTINGS.items || [];
-    if (!items.length) return [];
-    
-    return items.map(item => {
-        const keywords = Array.isArray(item.keywords) ? item.keywords : [];
-        
-        return {
-            itemIdUrl: item.itemIdUrl || cropTitle(item.title) || typewriterConfig.labels.thisProduct,
-            title: cropTitle(item.title),
-            fullTitle: item.title || '',
-            image: item.image || '',
-            keywords: keywords,
-            totalKeywordCount: keywords.length,
-            loading: false
-        };
-    });
-}
-
-/**
- * Generate all recommendation lines for a product using advanced logic
- */
-function generateRecommendationLines(product) {
-    const result = buildTypewriter(product, typewriterConfig);
-    return result.lines;
-}
-
-/**
- * Update product display chip
- */
-function setProductChip(item) {
-    const elImg = document.getElementById('heroTickImg');
-    const elTitle = document.getElementById('heroTickTitle');
-    const elCounts = document.getElementById('heroTickCounts');
-    
-    if (elImg) {
-        if (item.image) {
-            elImg.src = item.image;
-            elImg.style.display = 'block';
-        } else {
-            elImg.style.display = 'none';
-        }
-        elImg.alt = item.fullTitle || 'item';
-    }
-    
-    if (elTitle) {
-        elTitle.textContent = item.title || '';
-        elTitle.title = item.fullTitle || ''; // Tooltip for full title
-    }
-    
-    if (elCounts) {
-        elCounts.textContent = `KW ${item.total ?? '—'}｜RPP ${item.rpp ?? '—'}`;
-    }
-}
-
-/**
- * Wait utility function
- */
-function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-/**
- * Typewriter effect - types text character by character
- */
-async function typewrite(element, text) {
-    if (!element || !typewriterConfig) return;
-    
-    element.classList.remove('done');
-    element.textContent = '';
-    
-    for (const char of text) {
-        element.textContent += char;
-        await wait(typewriterConfig.animation.typeSpeed);
-    }
-    
-    element.classList.add('done');
-}
-
-/**
- * Erase text character by character
- */
-async function erase(element) {
-    if (!element || !typewriterConfig) return;
-    
-    element.classList.remove('done');
-    const text = element.textContent;
-    
-    for (let i = text.length; i >= 0; i--) {
-        element.textContent = text.slice(0, i);
-        await wait(typewriterConfig.animation.eraseSpeed);
-    }
-}
-
-/**
- * Main typewriter animation loop with advanced logic
- */
-async function startTypewriterLoop() {
-    if (typewriterRunning) return;
-    typewriterRunning = true;
-    
-    const elTypeLine = document.getElementById('typeLine');
-    if (!elTypeLine) return;
-    
-    const items = buildTypewriterItems();
-    
-    if (!items.length) {
-        typewriterRunning = false;
-        return;
-    }
-    
-    while (typewriterRunning) {
-        const item = items[currentProductIndex % items.length];
-        
-        // Update product chip
-        setProductChip({
-            title: item.title,
-            fullTitle: item.fullTitle,
-            image: item.image,
-            total: item.totalKeywordCount,
-            rpp: item.keywords ? item.keywords.filter(hasRpp).length : 0
-        });
-        
-        // Generate all lines for this product
-        const lines = generateRecommendationLines(item);
-        
-        // Cycle through all generated lines for this product
-        for (const line of lines) {
-            if (!typewriterRunning) break;
-            
-            await typewrite(elTypeLine, line);
-            await wait(typewriterConfig.animation.holdDuration);
-            
-            await erase(elTypeLine);
-            await wait(typewriterConfig.animation.gapDuration);
-        }
-        
-        currentProductIndex++;
-    }
-}
-
-/**
- * Stop typewriter animation
- */
-function stopTypewriter() {
-    typewriterRunning = false;
-}
-
-/**
- * Initialize typewriter system
- */
-async function initTypewriter() {
-    // Wait a moment for page to be ready
-    setTimeout(async () => {
-        await loadTypewriterConfig();
-        startTypewriterLoop();
-    }, 1000);
-}
-
-// Start typewriter when page is ready
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    initTypewriter();
-} else {
-    document.addEventListener('DOMContentLoaded', initTypewriter);
-}
-
-/* =============================================================================
-   FAQ SYSTEM
-   ============================================================================= */
-
-let faqData = null;
-
-/**
- * Load FAQ data from JSON file
- */
-async function loadFAQData() {
-    try {
-        const response = await fetch('FAQ.json');
-        if (!response.ok) throw new Error('Failed to load FAQ data');
-        const data = await response.json();
-        faqData = data.FAQ || [];
-        return faqData;
-    } catch (error) {
-        console.error('Error loading FAQ data:', error);
-        return [];
-    }
-}
-
-/**
- * Render FAQ section for current language
- */
-function renderFAQ() {
-    const faqList = document.getElementById('faqList');
-    if (!faqList || !faqData) return;
-    
-    const lang = langState === 'en' ? 'EN' : 'JP';
-    const dict = I18N[langState] || I18N.ja;
-    
-    // Remove existing event listeners
-    const oldFaqList = faqList.cloneNode(false);
-    faqList.parentNode.replaceChild(oldFaqList, faqList);
-    
-    oldFaqList.innerHTML = faqData.map((item, index) => `
-        <div class="faq-item" data-index="${index}">
-            <button class="faq-question" type="button">
-                <span>${item.Q[lang] || ''}</span>
-                <span class="faq-arrow">▼</span>
-            </button>
-            <div class="faq-content">
-                <div class="faq-answer">${item.A[lang] || ''}</div>
-                ${item.Action && item.Action[lang] ? `
-                    <div class="faq-action">
-                        <div class="faq-action-label">${dict.faqAction}</div>
-                        ${item.Action[lang]}
-                    </div>
-                ` : ''}
-            </div>
-        </div>
-    `).join('');
-    
-    // Add fresh click handlers for FAQ items
-    oldFaqList.addEventListener('click', (e) => {
-        const button = e.target.closest('.faq-question');
-        if (!button) return;
-        
-        const item = button.closest('.faq-item');
-        const isExpanded = item.classList.contains('expanded');
-        
-        // Close all other items
-        oldFaqList.querySelectorAll('.faq-item').forEach(otherItem => {
-            if (otherItem !== item) {
-                otherItem.classList.remove('expanded');
-            }
-        });
-        
-        // Toggle current item
-        item.classList.toggle('expanded', !isExpanded);
-    });
-}
-
-/**
- * Initialize FAQ system
- */
-async function initFAQ() {
-    await loadFAQData();
-    renderFAQ();
-}
-
-// Initialize FAQ when page loads
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    initFAQ();
-} else {
-    document.addEventListener('DOMContentLoaded', initFAQ);
-}
+document.addEventListener('DOMContentLoaded', () => {
+    initializeShopCategories();
+});
